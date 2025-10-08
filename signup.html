@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #a67c52, #f5f0e1); /* brown to beige */
+      font-family: 'Arial', sans-serif;
+    }
+    .input-field {
+      background-color: #000; /* black input background */
+      color: #fff; /* white text */
+    }
+    .input-field::placeholder {
+      color: #f5f0e1; /* beige placeholder */
+    }
+    .link-underline {
+      color: #000; 
+      position: relative;
+      text-decoration: none;
+    }
+    .link-underline::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: #a67c52;
+      transition: width 0.3s;
+    }
+    
+    .link-underline:hover::after {
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center min-h-screen">
+
+  <!-- Header / Nav -->
+  <header class="sticky top-0 z-40 border-b border-beige bg-[#662c1e] backdrop-blur-xl w-full">
+    <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-4">
+      <img src="images/logo.png" alt="Ink&Imagination Logo" class="h-16 w-auto">
+      <h3> INK & IMAGINATION</h3>
+
+      <div  id=nav class="ml-auto hidden md:flex items-center gap-6">
+        <a href="index.html" class="link-underline">HOME</a>
+        <a href="books.html" class="link-underline">Books</a>
+        <a href="genere.html" class="link-underline">Genres</a>
+        <a href="author.html" class="link-underline">Author</a>
+        <a href="create.html" class="link-underline">Create</a>
+        <button id="themeToggle" class="px-3 py-1.5 rounded-full border border-black" aria-label="Toggle theme">
+          🌙
+        </button>
+      </div>
+    </div>
+    
+  </header>
+   
+<!-- Video Background -->
+<video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover -z-10">
+    <source src="images/4440120-hd_1920_1080_25fps (1).mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <!-- Signup Form -->
+  <div class="flex-1 flex items-center justify-center w-full px-4 py-10">
+    <div class="bg-black bg-opacity-70 p-8 rounded-2xl w-full max-w-md shadow-lg">
+      <h2 class="text-white text-3xl font-bold mb-6 text-center">Create Your Account</h2>
+      
+      <form id="signupForm" class="space-y-4">
+        <div>
+          <label class="text-white mb-1 block" for="name">Full Name</label>
+          <input class="input-field w-full p-3 rounded-lg" type="text" id="name" placeholder="John Doe" required>
+        </div>
+        
+        <div>
+          <label class="text-white mb-1 block" for="email">Email</label>
+          <input class="input-field w-full p-3 rounded-lg" type="email" id="email" placeholder="example@mail.com" required>
+        </div>
+        
+        <div>
+          <label class="text-white mb-1 block" for="password">Password</label>
+          <input class="input-field w-full p-3 rounded-lg" type="password" id="password" placeholder="********" required>
+        </div>
+        
+        <button type="submit" class="w-full bg-[#a67c52] hover:bg-[#8b5e3c] text-white font-bold py-3 rounded-lg transition-colors">
+          Sign Up
+        </button>
+      </form>
+
+      <p class="text-white mt-4 text-center">Already have an account? <a href="#" class="underline text-[#f5f0e1]">Login</a></p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('signupForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if(name === '' || email === '' || password === '') {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      if(!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+
+      if(password.length < 6) {
+        alert('Password must be at least 6 characters long.');
+        return;
+      }
+
+      alert(`Welcome, ${name}! Your account has been created.`);
+      form.reset();
+    });
+  </script>
+
+</body>
+</html>

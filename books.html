@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>View All Books</title>
+<style>
+    :root {
+        --parchment: #0a0a0a;
+  --parchment-2: #f0dbc2;
+  --ink: #ddd0c0;      
+  --ink-2: #0b0b0c;    
+  --garnet: #f71a12;
+  --gold: #f1594e;
+  --olive: #6b7a40;
+  --paper: #030303;
+  --soot: #0f0d0b;
+  --soot-2: #c5beb9; 
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: var(--parchment-2);
+        color: var(--ink-2);
+    }
+
+    header {
+        background-color: var(--parchment);
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+    }
+
+    .logo img {
+        height: 60px;
+        margin-right: 10px;
+    }
+
+    .logo h4 {
+        margin: 0;
+        color: var(--ink-2);
+        font-weight: bold;
+        letter-spacing: 1px;
+        color: #ddd0c0;
+    }
+
+    .search-box {
+        display: flex;
+        align-items: center;
+        background: var(--ink);
+        padding: 5px 10px;
+        border-radius: 20px;
+        border: 1px solid var(--soot-2);
+        width: 300px;
+        margin: 10px 0;
+    }
+
+    .search-box input {
+        border: none;
+        outline: none;
+        flex: 1;
+        padding: 5px;
+        font-size: 14px;
+        border-radius: 20px;
+        background: var(--ink);
+        color: var(--ink-2);
+    }
+
+    nav a {
+        text-decoration: none;
+        margin: 0 10px;
+        color: var(--ink-2);
+        font-weight: bold;
+        transition: 0.3s;
+        color: #c5beb9;
+    }
+
+    nav a:hover {
+        color: var(--garnet);
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 20px;
+        color: var(--ink-2);
+    }
+
+    .books-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .book-card {
+        position: relative;
+        text-align: center;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        background: var(--ink);
+        transition: transform 0.3s;
+    }
+
+    .book-card img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+
+    .book-card:hover img {
+        transform: scale(1.1);
+    }
+
+    .book-card .book-title {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background: rgba(202, 53, 48, 0.85); /* gold/garnet overlay */
+        color: var(--ink);
+        font-weight: bold;
+        padding: 5px 0;
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size: 14px;
+    }
+
+    .book-card:hover .book-title {
+        opacity: 1;
+    }
+
+    #loadMoreBtn {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background: var(--garnet);
+        color: var(--ink);
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition:background 0.3s;
+    }
+
+    #loadMoreBtn:hover {
+        background: var(--gold);
+    }
+
+    footer {
+        background-color: var(--soot);
+        padding: 20px;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        font-size: 14px;
+        color: var(--ink);
+    }
+
+    footer div {
+        margin: 10px;
+    }
+
+    .footer-title {
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    footer div div:hover {
+        color: var(--garnet);
+        cursor: pointer;
+    }
+
+    .app-buttons img {
+        height: 40px;
+        margin: 5px 0;
+        cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+        .books-container {
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        }
+        .book-card img {
+            height: 180px;
+        }
+        .search-box {
+            width: 100%;
+        }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="images/logo.png" alt="Logo">
+        <h4>INK&IMAGINATION</h4>
+    </div>
+    <div class="search-box">
+        <input type="text" placeholder="Search Your Books" id="searchInput">
+    </div>
+    <nav>
+        <a href="index.html">HOME</a>
+        <a href="books.html">BOOKS</a>
+        <a href="create.html">CREATE NEW</a>
+        <a href="login.html">LOGIN</a>
+    </nav>
+</header>
+
+<h2>All Books</h2>
+
+<div class="books-container" id="booksContainer">
+    <!-- Books will be dynamically inserted here -->
+</div>
+
+<button id="loadMoreBtn">Load More</button>
+
+<footer>
+    <div>
+        <div class="footer-title">COMPANY</div>
+        <div>About Us</div>
+        <div>Careers</div>
+        <div>Terms</div>
+        <div>Privacy</div>
+    </div>
+    <div>
+        <div class="footer-title">WORK WITH US</div>
+        <div>Authors</div>
+        <div>Advertise</div>
+        <div>API</div>
+    </div>
+    <div>
+        <div class="footer-title">CONTACT</div>
+        <div>FAQ</div>
+        <div>Search Guide</div>
+    </div>
+    <div class="app-buttons">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store">
+    </div>
+</footer>
+
+<script>
+    const books = [
+        {title: "The Afternoon of Life", cover: "https://images-platform.99static.com//DVdRV5U4mxS9rlJpQyMtbl05LLY=/404x172:1456x1225/fit-in/500x500/projects-files/183/18364/1836425/e4190f79-e06d-4305-aff2-933124137728.jpg"},
+        {title: "Hidden Treasure", cover: "https://images.crowdspring.com/blog/wp-content/uploads/2018/09/27130903/rsz_hidden_treasure_smarikaahuja.png"},
+        {title: "The Winner Maker", cover: "https://images-platform.99static.com//IVer2mlwoEKEEWVWiI6sY-opXKY=/337x36:1414x1113/fit-in/500x500/projects-files/67/6798/679883/4e42040c-537b-4f99-b197-b54dcf6f520a.jpg"},
+        {title: "Make your own happiness", cover: "https://static.vecteezy.com/system/resources/thumbnails/000/217/193/small_2x/motivational-book-cover-with-hand-lettering.jpg"},
+        {title: "Still Single", cover: "https://images-platform.99static.com//tPNd5NweQgRCvWkb-y63B-YraHQ=/401x176:1458x1234/fit-in/500x500/projects-files/182/18278/1827808/85922e8c-e238-45ab-b8d8-f836c4667e4c.jpg"},
+        {title: "Insights", cover: "https://images-platform.99static.com//RybqcokWrO13wFtN4YOjghdGf0Q=/475x138:1528x1191/fit-in/590x590/projects-files/170/17034/1703459/d4cff965-f099-4c3a-9ba6-9ed0b3887df4.jpg"},
+        {title: "Simple", cover: "https://m.media-amazon.com/images/I/61sbo8zRifL._UF1000,1000_QL80_.jpg"},
+        {title: "Autumn", cover: "https://png.pngtree.com/template/20200807/ourmid/pngtree-color-matching-autumn-photography-book-cover-design-image_400413.jpg"},
+        {title: "Book Mockup", cover: "https://goodmockups.com/wp-content/uploads/2024/08/Free-Book-Title-Spine-Mockup-PSD.jpg"},
+        {title: "Intuition", cover: "https://i.pinimg.com/736x/71/be/d7/71bed7e22855c30309b47ee9a3083001.jpg"},
+        {title: "Through the Breaking", cover: "https://i.pinimg.com/originals/f5/47/20/f547208555040a3dd2a11b794551db03.jpg"},
+        {title: "The Periodic Table", cover: "https://i.pinimg.com/236x/19/43/18/194318d0916aea3bbb4d4a21323b34d2.jpg"},
+        {title: "West", cover: "https://i.pinimg.com/originals/95/33/86/9533864512b95c00ec38876297014ea9.jpg"},
+        {title: "Where He Comes There Is Light", cover: "https://cdn.novelupdates.com/images/2024/12/Where-He-Comes-There-Is-Light.jpg"},
+        {title: "Waiting For You In A City", cover: "https://cdn.novelupdates.com/images/2020/05/Waiting-for-You-in-a-City4.jpg"},
+        {title: "Displaying Beautiful Brocade", cover: "https://cdn.novelupdates.com/images/2025/02/Displaying-Beautiful-Brocade.jpg"},
+        {title: "Thousand Miles of Bright Moonlight", cover: "https://cdn.novelupdates.com/images/2021/03/Thousand-Miles-of-Bright-Moonlight.jpg"},
+        {title: "Series 2378", cover: "https://cdn.novelupdates.com/imgmid/series_2378.jpg"},
+        {title: "9787559407139", cover: "https://cdn.novelupdates.com/images/2019/11/9787559407139.jpg"},
+        {title: "Chun Tai Ji Ming", cover: "https://cdn.novelupdates.com/images/2025/03/Chun-Tai-Ji-Ming.jpg"},
+        {title: "Jun Jiuling", cover: "https://cdn.novelupdates.com/images/2017/06/Jun-Jiuling.jpg"},
+        {title: "Mystery Book", cover: "https://i.pinimg.com/736x/8e/98/24/8e9824c01f9d252372bca72fd01f959e.jpg"},
+        {title: "Goodreads Book", cover: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1513786433i/36154097._UX160_.jpg"},
+        {title: "Woman Who Walked Into The Sea", cover: "https://booksplease.org/wp-content/uploads/2020/10/woman-who-walked-into-the-sea.jpg"},
+        {title: "William Blake", cover: "https://c8.alamy.com/comp/JTG3G9/william-blake-the-book-of-thel-plate-2-title-page-JTG3G9.jpg"},
+        {title: "Pin Book 1", cover: "https://i.pinimg.com/236x/ea/90/ba/ea90bafd17d4b716b3cdf268c13d0265.jpg"},
+        {title: "Pin Book 2", cover: "https://i.pinimg.com/236x/2f/f8/70/2ff870b6d40745c1be9bd94a506905cb.jpg"},
+        {title: "Sample Book 1", cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794"},
+        {title: "Sample Book 2", cover: "https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d"}
+    ];
+
+    const booksContainer = document.getElementById('booksContainer');
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    let booksPerPage = 12;
+    let currentIndex = 0;
+
+    function renderBooks(bookArray) {
+        booksContainer.innerHTML = '';
+        const toShow = bookArray.slice(0, currentIndex);
+        toShow.forEach(book => {
+            const card = document.createElement('div');
+            card.className = 'book-card';
+            card.innerHTML = `
+                <img src="${book.cover}" alt="${book.title}">
+                <div class="book-title">${book.title}</div>
+            `;
+            booksContainer.appendChild(card);
+        });
+        if(currentIndex >= bookArray.length) {
+            loadMoreBtn.style.display = 'none';
+        } else {
+            loadMoreBtn.style.display = 'block';
+        }
+    }
+
+    // Initial render
+    currentIndex = booksPerPage;
+    renderBooks(books);
+
+    loadMoreBtn.addEventListener('click', () => {
+        currentIndex += booksPerPage;
+        renderBooks(filteredBooks || books);
+    });
+
+    // --- Search functionality ---
+    let filteredBooks = null;
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        filteredBooks = books.filter(book => book.title.toLowerCase().includes(query));
+        currentIndex = booksPerPage;
+        renderBooks(filteredBooks);
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Genres</title>
+  <style>
+    :root {
+      --parchment: #662c1e;
+      --parchment-2: #662c1e;
+      --ink: #f3eee8;
+      --ink-2: #fafaff;
+      --garnet: #ca3530;
+      --gold: #ca3530;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      padding: 20px;
+      background: var(--parchment-2);
+      color: var(--ink);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--gold);
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+    }
+
+    .genre-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+
+    .genre-card {
+      width: 180px;
+      height: 120px;
+      background: var(--parchment);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.2s, background 0.2s;
+      text-align: center;
+      padding: 10px;
+      color: var(--ink);
+    }
+
+    .genre-card:hover {
+      transform: scale(1.08);
+      background: var(--garnet);
+    }
+
+    #book-list {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 15px;
+      background: var(--parchment);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    #book-list h2 {
+      color: var(--gold);
+      font-size: 2rem;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--garnet);
+      padding-bottom: 5px;
+    }
+
+    .book {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 25px;
+      background: var(--parchment-2);
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+
+    .book img {
+      width: 100px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    .book-content {
+      flex: 1;
+    }
+
+    .book h3 {
+      margin: 0;
+      font-size: 1.3rem;
+      color: var(--gold);
+    }
+
+    .book p {
+      margin: 5px 0 10px;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      color: var(--ink);
+    }
+
+    .view-more-btn {
+      display: inline-block;
+      background: var(--garnet);
+      color: var(--ink);
+      padding: 8px 16px;
+      border-radius: 5px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .view-more-btn:hover {
+      background: var(--gold);
+      color: var(--parchment);
+    }
+
+    @media (max-width: 768px) {
+      .book {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .book img {
+        margin-bottom: 10px;
+      }
+    }
+
+    header{
+      background: var(--header-yellow);
+      display:flex;
+      align-items:center;
+      gap:16px;
+      padding:12px 28px;
+      flex-wrap:wrap;
+    }
+    .logo{
+       display:flex;
+        align-items:center;
+         gap:10px;
+          min-width:160px;
+         }
+
+    .logo img{
+       height:64px; 
+       width: 100px;
+       border-radius:6px;
+        background:#a55b5b;
+         padding:4px;
+         }
+
+    .search-wrap{ 
+      flex:1 1 380px;
+       display:flex; 
+       justify-content:center; 
+      }
+
+    .search-wrap input{
+       width:100%;
+        max-width:520px;
+         padding:9px 14px;
+          border-radius:24px;
+           border:1px solid rgba(0,0,0,0.12);
+            font-size:14px; 
+          }
+
+    nav{ 
+      display:flex;
+       gap:18px;
+        align-items:center; 
+        font-weight:600;
+       }
+    nav a{
+       text-decoration:none;
+        color:#ebdddd; font-size:14px;
+       }
+
+
+  </style>
+</head>
+<body>
+ <!-- Nav -->
+<header>
+  <div class="logo">
+    <img src="Images/logo.png" alt="Logo">
+    <div>
+      <div style="font-weight:800;">INK& Imagination</div>
+      <div style="font-size:12px;margin-top:-4px;">Your Imagination</div>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <input type="search" placeholder="Search Your Books" aria-label="Search Your Books" />
+  </div>
+  <nav>
+    <a href="index.html">HOME</a>
+    <a href="books.html">BOOK</a>
+    <a href="create.html">CREATE NEW</a>
+    <a href="login.html">LOGIN</a>
+  </nav>
+</header>
+
+  <h1>Explore Book Genres</h1>
+
+  <div class="genre-container">
+    <div class="genre-card" onclick="showBooks('fiction')">Fiction</div>
+    <div class="genre-card" onclick="showBooks('romance')">Romance</div>
+    <div class="genre-card" onclick="showBooks('mystery')">Mystery</div>
+    <div class="genre-card" onclick="showBooks('ScienceFiction')">Science Fiction</div>
+    <div class="genre-card" onclick="showBooks('Fantasy')">Fantasy</div>
+    <div class="genre-card" onclick="showBooks('melo')">Melodramatic</div>
+    <div class="genre-card" onclick="showBooks('Horror')">Horror</div>
+  </div>
+
+  <div id="book-list"></div>
+
+  <script>
+    const books = {
+  fiction: [
+    { title: "The Great Gatsby", desc: "Set during the decadent Jazz Age of the 1920s, The Great Gatsby is a tragic American novel narrated by Nick Carraway, a Midwesterner who moves next to a mysterious millionaire named Jay Gatsby. Gatsby uses his immense wealth, acquired illegally through bootlegging, to throw lavish parties in the hopes of attracting his long-lost love, Daisy Buchanan, who lives across the bay with her wealthy, unfaithful husband, Tom. With Nick's help, Gatsby and Daisy begin an affair, but during a tense confrontation, Daisy chooses to stay with Tom. In a tragic turn of events, Daisy accidentally runs over and kills Tom's mistress, Myrtle Wilson, with Gatsby's car, and Gatsby takes the blame. Motivated by Tom, Myrtle's vengeful husband, George, fatally shoots Gatsby in his swimming pool before killing himself. In the aftermath, Nick finds himself disillusioned by the moral emptiness of the wealthy, and only a few people attend Gatsby's funeral before he decides to return to the Midwest.", img: "https://covers.openlibrary.org/b/id/7222246-L.jpg" },
+    { title: "To Kill a Mockingbird", desc: "In Harper Lee's novel To Kill a Mockingbird, narrated by a young girl named Scout Finch, the story explores themes of racial injustice and the loss of innocence in the segregated 1930s South. Scout's lawyer father, Atticus, is appointed to defend Tom Robinson, a Black man falsely accused of raping a white woman, Mayella Ewell. Though Atticus provides overwhelming evidence of Tom's innocence and reveals that Mayella's abusive father likely beat her, the all-white jury convicts Tom. Later, Tom is shot and killed while trying to escape prison. Meanwhile, Scout and her brother Jem, alongside their friend Dill, are fascinated by their reclusive neighbor, Boo Radley, who secretly leaves gifts for them. After the trial, Mayella's vengeful father, Bob Ewell, attacks Scout and Jem, but Boo intervenes, kills Ewell, and carries an injured Jem to safety. The town sheriff, Heck Tate, decides to say Ewell fell on his own knife to protect Boo from public scrutiny, a choice Scout understands as protecting a vulnerable mockingbird. The novel concludes with Scout's realization that empathy and compassion are more important than rigid adherence to the law, cementing the story as a powerful critique of prejudice and a celebration of human decency.", img: "https://covers.openlibrary.org/b/id/8228691-L.jpg" },
+    { title: "Brave New World", desc: "Brave New World by Aldous Huxley presents a dystopian future where stability and conformity are maintained through technological control, psychological conditioning, and instant gratification. In the World State of 2540 A.F. (After Ford), humans are mass-produced in laboratories, sorted into a rigid caste system, and conditioned from birth to accept their predetermined roles. The society eliminates war, poverty, and unhappiness but sacrifices individuality, art, love, and family in the process. The story follows Bernard Marx, a man who feels alienated from this shallow existence, and John, a young man raised outside the World State on a Savage Reservation. Their clash with the controlled society forces a confrontation with the fundamental trade-offs between human freedom and societal stability.", img: "https://images.squarespace-cdn.com/content/v1/55db4360e4b09e4a0cc73ffd/1662562817259-8ES3R6VDTEVIPY7WWEGY/BNW.jpg" },
+    { title: "The Handmaid's Tale", desc: "The Handmaid's Tale by Margaret Atwood depicts a near-future totalitarian theocracy known as the Republic of Gilead, which has overthrown the United States government. In a world plagued by infertility, fertile women are enslaved as Handmaids to bear children for the ruling elite. The narrative is told through the eyes of Offred, a Handmaid who remembers her life before the revolution and silently resists the brutal, patriarchal regime that has stripped women of all rights, including the ability to read and write. Atwood uses Offred's story to explore themes of female subjugation, state control over reproduction, and the fragility of individual freedom.", img: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1488552336i/34454589.jpg" },
+    { title: "Fahrenheit 451", desc: "Fahrenheit 451 by Ray Bradbury portrays a dystopian American society where books are outlawed and firemen are tasked with burning any that are found. In this anti-intellectual future, citizens are addicted to shallow, interactive wall-sized televisions and entertainment, with critical thought and knowledge actively suppressed. Guy Montag, a third-generation fireman, starts to question his job and the world he lives in after a series of encounters with his free-spirited teenage neighbor and witnessing the public suicides of book owners. His quest for knowledge and his attempts to reconnect with a banished English professor place him on a collision course with his superiors and the society he once protected.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcWPMYEFORO4RAL2VbaqQfx700EZ78YI5iPQ&s" },
+    { title: "The Road", desc: "The Road by Cormac McCarthy is a post-apocalyptic novel detailing the grueling journey of an unnamed father and his young son across a desolate, ash-covered America. A global cataclysm has destroyed civilization and killed most life on Earth, leaving the few survivors to face starvation and violent, cannibalistic groups. The father, slowly succumbing to a terminal illness, fiercely protects his son, whom he sees as a vessel of goodness and the last hope for humanity. In a world stripped of all civility, their desperate struggle for survival is a testament to the enduring power of paternal love and a poignant reflection on the human spirit in the face of despair.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyHIL_ZsQ0XrcwpTke87cjd3rWMI-h6TKB9Q&s" },
+    { title: "1984", desc: "Set in a totalitarian superstate called Oceania, George Orwell's 1984 is a dystopian novel that follows the life of Winston Smith, a low-ranking Party member. As a Records Department employee at the Ministry of Truth, Winston's job is to falsify historical records to align with the Party's ever-changing narrative. He secretly despises the oppressive regime and its enigmatic leader, Big Brother, whose omnipresent image looms over society", img: "https://covers.openlibrary.org/b/id/7222246-M.jpg" }
+  ],
+
+  romance: [
+    { title: "Pride and Prejudice", desc: "Pride and Prejudice is a classic romantic novel by Jane Austen, published in 1813. The story focuses on Elizabeth Bennet, one of five daughters in a family of modest gentry living in rural England. The plot is set in motion when a wealthy and amiable young man, Charles Bingley, moves into the neighborhood, bringing with him his even wealthier and more reserved friend, Mr. Fitzwilliam Darcy. While Bingley and Elizabeth's older sister Jane quickly form an attachment, the proud and class-conscious Mr. Darcy immediately clashes with the witty and headstrong Elizabeth, who forms a strong prejudice against him based on his aloof demeanor and a deceitful account from the charming soldier George Wickham. Through a series of social encounters, misunderstandings, and personal revelations—including Darcy’s surprisingly virtuous actions and Elizabeth’s realization of her own hasty judgments—their initial animosity transforms into a genuine love based on mutual respect and a deeper understanding of one another's true character.", img: "https://covers.openlibrary.org/b/id/8091016-L.jpg" },
+    { title: "The Notebook", desc: "In Nicholas Sparks' novel The Notebook, an elderly man named Duke reads a love story to a woman suffering from dementia in a nursing home, hoping to trigger her memory. The story follows Noah Calhoun, a poor but passionate country boy, and Allie Hamilton, a rich girl, who share a whirlwind summer romance in the 1940s. Their love is torn apart by Allie's class-conscious parents, who whisk her away and secretly intercept Noah's letters. Years later, while engaged to another man, Allie sees a newspaper article about Noah having restored their dream home and returns to see him.", img: "https://covers.openlibrary.org/b/id/8231856-L.jpg" },
+    { title: "The Journey of Flower by Fresh Guo Guo", desc: "This fantasy romance novel follows Hua Qiangu, an orphaned young girl with a unique scent that attracts supernatural beings. She joins the Chang Liu immortal sect and becomes the sole disciple of the powerful immortal master, Bai Zihua. Despite the strict rules and dangers of their world, Hua Qiangu falls deeply in love with her teacher. Their forbidden love story is full of immense sacrifice, misunderstanding, and tragedy. Bai Zihua loves Hua Qiangu deeply, but his duty to protect the world leads him to cause her immense suffering, which transforms her into a powerful Demon God.", img: "https://m.media-amazon.com/images/I/71TUpnIn3pL._UF1000,1000_QL80_.jpg" },
+    { title: "Waiting for You in a City", desc: "Waiting for You in a City is likely a reference to Waiting for You in the City (一座城，在等你), a Chinese novel by Jiu Yue Xi about the passionate, rebellious relationship between Xu Qin, a cold-hearted medical professional, and Song Yan, a hot-tempered orphan. The story explores their desire for freedom and genuine connection, despite their challenging backgrounds and the disapproval of Xu Qin's adoptive family.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi71g0VROtQsLco00Nv9CONUmy1WazBrYo2A&sg" },
+    { title: "Thousand Miles of Bright Moonlight", desc: "Thousand Miles of Bright Moonlight (罗青梅) is a historical romance novel, adapted into a drama, about a princess named Yaoying who is forced into a marriage with a tribal chief but escapes by falsely professing her love for a sickly, legendary lord. Her audacious claim creates a legendary tale of a monk and a Chinese princess, leading to a humorous and romantic story centered on their budding relationship despite the initial deception and the lord's seemingly impossible status as a monk.", img: "https://cdn.novelupdates.com/images/2021/03/Thousand-Miles-of-Bright-Moonlight.jpg" },
+    { title: "Where He Comes There Is Light", desc: "Where He Comes There Is Light likely describes the concept of a divine presence bringing illumination and hope, a theme found in various religions and spiritual traditions, including a reference to the celestial abode of the devas in Hinduism (Svarga) and the divine Light (Nur) in Islam, symbolizing guidance and purity. The phrase could also relate to the Gospel of Thomas's description of the light within a man of light that illuminates the world, central to Gnostic thought.", img: "https://cdn.novelupdates.com/images/2024/12/Where-He-Comes-There-Is-Light.jpg" },
+    { title: "Me Before You", desc: "In Jojo Moyes' novel Me Before You, a young and quirky woman named Louisa Lou Clark takes a temporary job as a caregiver for Will Traynor, a wealthy and once-adventurous man who was left quadriplegic after an accident. Initially cynical and withdrawn, Will is resistant to Lou's cheerful and bright personality, but she refuses to be discouraged. As Lou learns of Will's plan to end his life through assisted suicide, she embarks on a mission to show him that life is still worth living. She plans a series of adventures and trips, and as they spend more time together, a deep bond of love and understanding develops between them. Despite their love, Will ultimately sticks to his decision, asserting that he wants Lou to live her own life to the fullest rather than a half-life with him.", img: "https://covers.openlibrary.org/b/id/8155425-L.jpg" }
+  ],
+
+  mystery: [
+    { title: "Gone Girl", desc: "A thrilling story of a marriage gone wrong.", img: "https://covers.openlibrary.org/b/id/7891356-L.jpg" },
+    { title: "Sherlock Holmes", desc: "Sir Arthur Conan Doyle’s famous detective tales.", img: "https://covers.openlibrary.org/b/id/8231992-L.jpg" },
+    { title: "And Then There Were None", desc: "And Then There Were None by Agatha Christie . Ten strangers are lured by a mysterious invitation to a remote island mansion off the coast of England. Upon their arrival, their unseen host accuses each guest of a past murder they got away with. Trapped on the island by a violent storm, the guests begin to die one by one, each murder seemingly mirroring a line from the nursery rhyme Ten Little Indians. As the number of survivors dwindles, paranoia and suspicion consume the group, forcing them to question if one of them is the killer or if a hidden twelfth person is orchestrating their demise. The intricate plot keeps readers guessing until the final, unexpected revelation", img: "https://m.media-amazon.com/images/I/81QbgfCoVXL._UF1000,1000_QL80_.jpg" },
+    { title: "The Silent Patients", desc: "The Silent Patient by Alex Michaelides. Famous painter Alicia Berenson has been institutionalized for five years after shooting her beloved husband Gabriel five times in the face and then refusing to speak another word. Psychotherapist Theo Faber, obsessed with Alicia's case, takes a job at the secure forensic unit where she is housed, determined to unravel the truth behind the murder. As he tries to break through Alicia's silence, Theo's own past and motives become entangled in the investigation. The novel builds suspense with its unreliable narration and psychological twists, heading toward a final, shocking twist that completely re-contextualizes everything the reader thought they knew..", img: "https://m.media-amazon.com/images/I/5177eLEs+YL._AC_SS250_.jpg" },
+    { title: "The Girl with the Dragon Tattoo", desc: "The Girl with the Dragon Tattoo by Stieg Larsson. Journalist Mikael Blomkvist, disgraced by a libel conviction, is hired by wealthy industrialist Henrik Vanger to solve the 40-year-old disappearance of his niece, Harriet, from the family's secluded island. Blomkvist enlists the help of Lisbeth Salander, a brilliant but troubled surveillance expert and hacker with a history of violence. As they dig into the Vanger family's dark and secretive past, they uncover a web of deceit, murder, and Nazism that goes far deeper than they could have imagined. Salander's own traumatic past is also exposed, making the case a high-stakes psychological and physical battle.", img: "https://m.media-amazon.com/images/I/81YW99XIpJL._UF1000,1000_QL80_.jpg" },
+    { title: "Gone Girl", desc: "Gone Girl by Gillian Flynn. On their fifth wedding anniversary, Nick Dunne's beautiful and clever wife, Amy, disappears, leaving behind a series of ominous clues. As the media and police scrutiny intensifies, Nick's suspicious behavior and secrets paint him as the prime suspect in his wife's murder. The story alternates between Nick's present-day perspective and Amy's past diary entries, revealing the cracks in their marriage and a terrifying tale of manipulation, deceit, and revenge. The novel becomes a chilling and suspenseful cat-and-mouse game, constantly shifting the reader's allegiances and expectations until the shocking final act..", img: "https://m.media-amazon.com/images/I/91WG-d6NMaL._UF894,1000_QL80_.jpg" },
+    { title: "The Maltese Falcon", desc: "The Maltese Falcon by Dashiell Hammett. In this classic hardboiled detective novel, private investigator Sam Spade is pulled into a complex web of deceit and danger after his partner, Miles Archer, is murdered. The case revolves around a coveted, jewel-encrusted statuette of a falcon and an array of colorful and untrustworthy characters, including the seductive Brigid O'Shaughnessy and the sinister Joel Cairo. As Spade navigates the criminal underworld of San Francisco, he must contend with shifting loyalties, double-crosses, and lethal consequences, all while trying to maintain his own moral code in a corrupt world.", img: "https://m.media-amazon.com/images/I/61h6YPUrwRL._UF1000,1000_QL80_.jpg" }
+  ],
+
+  ScienceFiction: [
+    { title: "Dune", desc: "Frank Herbert’s sci-fi epic about politics and survival.", img: "https://covers.openlibrary.org/b/id/8101356-L.jpg" },
+    { title: "Ender's Game", desc: "A young genius is trained to save humanity in space wars.", img: "https://covers.openlibrary.org/b/id/7889376-L.jpg" },
+    { title: "The Hitchhiker's Guide to the Galaxy", desc: "The Hitchhiker's Guide to the Galaxy by Douglas AdamsThis comedic science fiction novel follows the misadventures of Arthur Dent, an ordinary Englishman who is rescued from Earth by his friend Ford Prefect, an alien researcher for a digital guidebook, just moments before the planet is annihilated to make way for a hyperspace bypass. As Arthur is thrown into a series of surreal and improbable events across the galaxy, he and Ford encounter a cast of eccentric characters, including the depressive robot Marvin and the two-headed President of the Galaxy, Zaphod Beeblebrox.", img: "https://m.media-amazon.com/images/I/71QPIPzuojL._UF1000,1000_QL80_.jpg" },
+    { title: "The Martian", desc: "The Martian by Andy WeirDuring a manned mission to Mars, astronaut Mark Watney is presumed dead and left behind after a fierce dust storm. A botanist and mechanical engineer, Watney survives and is forced to use his ingenuity and limited supplies to produce food, communicate with Earth, and find a way to stay alive until a rescue mission can be organized. The story is a gripping and scientifically accurate tale of survival against impossible odds, celebrated for its detailed approach to problem-solving and its a testament to the human spirit.", img: "https://m.media-amazon.com/images/I/71Tp86ptAtL._UF1000,1000_QL80_.jpg" },
+    { title: "The Left Hand of Darkness", desc: "The Left Hand of Darkness by Ursula K. Le Guin. In this classic of anthropological science fiction, an Earth-born envoy named Genly Ai is sent to the planet Gethen, a world where the inhabitants are ambisexual and can adopt either a male or female physiology during their mating cycle, or kemmer. Genly's mission is to convince Gethen to join an interplanetary alliance of human worlds, but his own culturally ingrained ideas about gender and sexuality hinder his understanding of Gethenian society.", img: "https://m.media-amazon.com/images/I/71zf1Adw1BL._UF1000,1000_QL80_.jpg" },
+    { title: "Frankenstein", desc: "Frankenstein by Mary Shelley. Often considered one of the earliest examples of science fiction, Frankenstein tells the story of Victor Frankenstein, an ambitious young scientist who discovers the secret to creating life. He assembles a human-like creature from body parts and, in a moment of hubris, brings it to life. Horrified by the creature's appearance, he abandons it. The creature, intelligent and sensitive but ostracized by a terrified society, seeks revenge on its creator. The novel is a chilling tale that explores themes of scientific ethics, hubris, and the relationship between a creator and their creation.", img: "https://m.media-amazon.com/images/I/91KEmBm2GVL.jpg" },
+    { title: "Neuromancer", desc: "William Gibson’s cyberpunk classic.", img: "https://covers.openlibrary.org/b/id/8228456-L.jpg" }
+  ],
+
+  melo: [
+    { title: "Titanic (1997)", desc: "Titanic (1997). A seventeen-year-old aristocrat, Rose, falls in love with a poor, kind-hearted artist, Jack, aboard the luxurious but ill-fated RMS Titanic. Their passionate love story unfolds against the backdrop of the ship's tragic maiden voyage, culminating in a devastating disaster that highlights themes of class, fate, and sacrifice.", img: "https://miro.medium.com/v2/resize:fit:1400/0*5MFFtR8MBLOv1q_Z.jpg" },
+    { title: "Wuthering Heights", desc: "Wuthering Heights by Emily Brontë: This dark and passionate novel tells the story of Catherine Earnshaw and the orphaned Heathcliff, whose intense and destructive love for one another spans a generation. Their love is constantly at war with social class, jealousy, and the ghosts of their past.", img: "https://d28hgpri8am2if.cloudfront.net/tagged_assets/cvr9781471141638/9781471141638_hr.jpg" },
+    { title: "Gone with the Wind", desc: "Gone with the Wind by Margaret Mitchell: An epic melodrama set during the American Civil War, this novel chronicles the life of the headstrong and manipulative Scarlett O'Hara. The story is a sweeping saga of survival, love, and immense loss, driven by Scarlett's dramatic and often selfish choices.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQgVtjddUsf2fhN4UbjPzSvUCqeSmoMUgNNQ&s" },
+    { title: "Jane Eyre", desc: "Jane Eyre by Charlotte Brontë: A Gothic romance and coming-of-age story follows the life of the orphaned Jane Eyre, a plain but intelligent governess, as she falls in love with her moody and mysterious employer, Mr. Rochester. Their love story is filled with secrets, tragic revelations, and moral dilemmas, culminating in a dramatic and emotionally charged climax.", img: "https://images3.penguinrandomhouse.com/cover/9780307917713" },
+    { title: "The Fault in Our Stars", desc: "The Fault in Our Stars by John Green: A young adult novel that is famously, and intentionally, melodramatic. It centers on a romance between two teenagers, Hazel and Gus, who meet at a cancer support group. Their story is an emotional and tragic tale about first love and the harsh realities of terminal illness, designed to evoke a strong emotional response from the reader.", img: "https://m.media-amazon.com/images/I/817tHNcyAgL._UF1000,1000_QL80_.jpg" }
+  ],
+
+  Horror: [
+    { title: "It", desc: "It by Stephen King. In the small town of Derry, Maine, a group of seven outcasts known as the Losers' Club is terrorized by an ancient, shapeshifting evil that takes the form of their greatest fears, often appearing as Pennywise the Dancing Clown. The story follows the children in 1958 as they unite to face the malevolent entity and again as adults in 1985 when they are forced to return to Derry to fulfill a childhood pact and confront It once more.", img: "https://m.media-amazon.com/images/I/71KWpItR2kL.jpg" },
+    { title: "The Haunting of Hill House", desc: "The Haunting of Hill House by Shirley Jackson. A paranormal investigator, Dr. Montague, brings together three individuals with varying connections to the supernatural to spend a summer at the notoriously haunted Hill House. The house itself is a character, possessing a malevolent, controlling intelligence that preys on the psychological vulnerabilities of its inhabitants. The story primarily focuses on Eleanor Vance, a fragile woman who feels isolated from the world.", img: "https://m.media-amazon.com/images/M/MV5BYTkwYzExODYtYmI2OS00MmM1LWI5M2MtNzYyOTIxMmI1NTc5XkEyXkFqcGc@._V1_.jpg" },
+    { title: "Dracula", desc: "Dracula by Bram Stoker. This Gothic horror novel is told through a series of letters, diary entries, and newspaper clippings that chronicle the arrival of the vampire Count Dracula from Transylvania to England. The narrative follows a group of men and women, led by the experienced vampire hunter Abraham Van Helsing, as they band together to fight the supernatural evil that threatens their loved ones and society itself.", img: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1387151694i/17245.jpg" },
+    { title: "The Exorcist", desc: "The Exorcist by William Peter Blatty. Based on a real-life exorcism, this novel tells the story of Regan MacNeil, a young girl who becomes possessed by a demon. Her mother, Chris, a famous actress, desperately seeks help after doctors fail to find a medical cause for Regan's increasingly violent and terrifying behavior. Two priests, Father Damien Karras, a man struggling with his faith, and Father Lankester Merrin, an experienced exorcist, are brought in to confront the evil entity.", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjpvZgZGcbM31XaXaUDkTK8KAIL47ZX6e8MQ&s" },
+    { title: "Rosemary's Baby", desc: "Rosemary's Baby by Ira Levin. In this slow-burn psychological horror, a young and unassuming woman named Rosemary Woodhouse and her ambitious actor husband, Guy, move into a mysterious apartment building in New York City. The elderly and eccentric neighbors quickly befriend them, but Rosemary grows increasingly paranoid as she becomes pregnant with her first child. Her suspicions grow that her neighbors and husband are part of a Satanic cult that has sinister plans for her baby.", img: "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p1845_p_v10_ai.jpg" },
+    { title: "The Shining", desc: "The Shining by Stephen King. Struggling writer and recovering alcoholic Jack Torrance takes a job as the winter caretaker at the isolated and snowbound Overlook Hotel in the Colorado Rockies. He brings his wife, Wendy, and their young son, Danny, who possesses a psychic ability called the shining. As winter sets in, the hotel's malevolent past begins to influence Jack's fragile psyche, driving him toward madness and violence. Simultaneously, Danny's supernatural gift reveals the hotel's horrifying secrets and awakens the ghostly residents. The story is a masterful psychological descent into madness.", img: "https://m.media-amazon.com/images/I/91U7HNa2NQL._UF1000,1000_QL80_.jpg" },
+    { title: "The Silence of the Lambs", desc: "The Silence of the Lambs by Thomas Harris. FBI trainee Clarice Starling is tasked with a difficult and dangerous assignment: to interview the brilliant but cannibalistic serial killer Dr. Hannibal Lecter. The bureau hopes Lecter's insights can help them profile and catch another active serial murderer, Buffalo Bill, who skins his female victims. Clarice must enter into a dangerous psychological game with Lecter, who offers tantalizing clues in exchange for personal information about her traumatic past.", img: "https://upload.wikimedia.org/wikipedia/en/6/62/Silence3.png" }
+  ],
+
+  Fantasy: [
+    { title: "Harry Potter", desc: "J.K. Rowling’s magical series about a young wizard.", img: "https://covers.openlibrary.org/b/id/7984916-L.jpg" },
+    { title: "The Hobbit", desc: "J.R.R. Tolkien’s adventure in Middle-earth.", img: "https://covers.openlibrary.org/b/id/6979861-L.jpg" },
+    { title: "The Lord of the Rings", desc: "The Lord of the Rings by J.R.R. Tolkien. In this foundational epic fantasy, a young hobbit named Frodo Baggins is tasked with the perilous quest of destroying the One Ring, a powerful artifact of immense evil forged by the Dark Lord Sauron. Accompanied by a fellowship of elves, dwarves, and humans, Frodo must journey to the dark realm of Mordor to cast the ring into the fires of Mount Doom.", img: "https://m.media-amazon.com/images/I/81j4C6j3dRL._UF1000,1000_QL80_.jpg" },
+    { title: "Mistborn: The Final Empire", desc: "Mistborn: The Final Empire by Brandon Sanderson. In a world of perpetual ash and a tyrannical ruler, the Lord Ruler, a young street urchin named Vin discovers she has the magical ability of allomancy, which allows her to manipulate metals within her body. She is recruited by Kelsier, a master thief and legendary allomancer, to join a crew plotting to overthrow the Lord Ruler.", img: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1722448068i/6547258.jpg" },
+    { title: "The Name of the Wind", desc: "The Name of the Wind by Patrick Rothfuss. This novel tells the story of Kvothe, a legendary musician, scholar, magician, and assassin, who has gone into hiding under a mundane identity. A chronicler tracks him down and convinces him to tell his life story. The narrative, told from Kvothe's perspective, begins with his childhood as a traveling performer in a troupe of actors. After his parents are murdered by a mysterious group of beings called the Chandrian, Kvothe is left orphaned and eventually winds up in the University, a prestigious academy where he hones his magical abilities.", img: "https://m.media-amazon.com/images/I/91KI2bIJUgL.jpg" },
+    { title: "Game of Thrones", desc: "George R.R. Martin’s epic fantasy of power and betrayal.", img: "https://covers.openlibrary.org/b/id/8232106-L.jpg" }
+  ]
+};
+
+    function showBooks(genre) {
+      const bookList = document.getElementById("book-list");
+      bookList.innerHTML = `<h2>${genre.replace(/([A-Z])/g, " $1")}</h2>`;
+      
+      books[genre].forEach(book => {
+        bookList.innerHTML += `
+          <div class="book">
+            <img src="${book.img}" alt="${book.title}">
+            <div class="book-content">
+              <h3>${book.title}</h3>
+              <p>${book.desc}</p>
+              <a href="#" class="view-more-btn">View More</a>
+            </div>
+          </div>
+        `;
+      });
+    }
+  </script>
+
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authors — Ink & Imagination</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --parchment: #662c1e;
+      --parchment-2: #efe7da;
+      --ink: #f3eee8;      
+      --ink-2: #0b0b0c;    
+      --garnet: #ca3530;
+      --gold: #ca3530;
+      --olive: #6b7a40;
+      --paper: #030303;
+      --soot: #0f0d0b;
+      --soot-2: #1a1613;
+    }
+
+    body {
+      font-family: 'Merriweather', serif;
+      background-color: var(--parchment-2);
+      color: var(--ink-2);
+    }
+
+    .author-card {
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      background-color: var(--parchment);
+      color: var(--ink);
+    }
+    .author-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    .author-message {
+      font-style: italic;
+      color: var(--ink-2);
+      max-height: 60px;
+      overflow: hidden;
+      transition: max-height 0.3s;
+    }
+    .author-card.expanded .author-message {
+      max-height: 500px;
+    }
+    .search-input {
+      max-width: 400px;
+      margin: 0 auto 2rem auto;
+      display: block;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid var(--garnet);
+      outline: none;
+      background-color: var(--parchment-2);
+      color: var(--ink-2);
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .search-input:focus {
+      border-color: var(--gold);
+      background-color: var(--paper);
+      color: var(--ink);
+    }
+    .comment-input {
+      margin-top: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 9999px;
+      border: 1px solid var(--soot);
+      width: 100%;
+      outline: none;
+      background-color: var(--parchment-2);
+      color: var(--ink-2);
+    }
+    .comment-btn {
+      margin-top: 0.3rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 9999px;
+      background-color: var(--garnet);
+      color: var(--ink);
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .comment-btn:hover {
+      background-color: var(--gold);
+    }
+    .comment {
+      font-size: 0.9rem;
+      color: var(--ink-2);
+      padding: 0.2rem 0;
+      border-bottom: 1px solid var(--soot-2);
+    }
+    h1, h2 {
+      color: var(--soot);
+    }
+  </style>
+</head>
+<body class="p-6">
+
+  <header class="text-center mb-8">
+    <h1 class="text-4xl font-bold mb-2">Meet Our Authors</h1>
+    <p class="text-lg" style="color: var(--soot-2);">Discover their stories and leave a message!</p>
+  </header>
+
+  <input type="text" id="searchInput" placeholder="Search authors..." class="search-input">
+
+  <main>
+    <div id="authorsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Author cards dynamically added here -->
+    </div>
+  </main>
+
+  <script>
+    const authors = [
+  { id: 1, name: "Paulo Coelho", profile: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=200&auto=format&fit=crop", description: "Brazilian lyricist and novelist, best known for 'The Alchemist'.", message: "Follow your dreams and listen to your heart.", comments: [] },
+  { id: 2, name: "Jane Austen", profile: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=200&auto=format&fit=crop", description: "English novelist known for her romantic fiction novels.", message: "It isn't what we say or think, but what we do that defines us.", comments: [] },
+  { id: 3, name: "Arthur Conan Doyle", profile: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop", description: "British writer best known for creating Sherlock Holmes.", message: "When you have eliminated the impossible, whatever remains, however improbable, must be the truth.", comments: [] },
+  { id: 4, name: "George Orwell", profile: "https://images.unsplash.com/photo-1531256379411-5b49c7f6e7c1?q=80&w=200&auto=format&fit=crop", description: "English novelist, essayist, journalist, and critic.", message: "In a time of deceit telling the truth is a revolutionary act.", comments: [] },
+  { id: 5, name: "Stephen King", profile: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=200&auto=format&fit=crop", description: "American author of horror, supernatural fiction, suspense, and fantasy novels.", message: "Books are a uniquely portable magic.", comments: [] },
+  { id: 6, name: "Yuval Noah Harari", profile: "https://images.unsplash.com/photo-1463320726281-696a485928c7?q=80&w=200&auto=format&fit=crop", description: "Israeli historian, philosopher, and author of 'Sapiens'.", message: "History helps us understand the present.", comments: [] },
+  { id: 7, name: "Harper Lee", profile: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=200&auto=format&fit=crop", description: "American novelist widely known for 'To Kill a Mockingbird'.", message: "Real courage is when you know you're licked before you begin, but you begin anyway.", comments: [] },
+  { id: 8, name: "Frank Herbert", profile: "https://images.unsplash.com/photo-1455885666463-9de6e474d2c6?q=80&w=200&auto=format&fit=crop", description: "American science-fiction author, best known for the Dune series.", message: "A beginning is a very delicate time.", comments: [] },
+  { id: 9, name: "Bram Stoker", profile: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=200&auto=format&fit=crop", description: "Irish author, best known for writing Dracula.", message: "Even the darkest night will end and the sun will rise.", comments: [] },
+  { id: 10, name: "Umberto Eco", profile: "https://images.unsplash.com/photo-1455885666463-9de6e474d2c6?q=80&w=200&auto=format&fit=crop", description: "Italian novelist, literary critic, philosopher, and semiotician.", message: "Books are not made to be believed, but to be subjected to inquiry.", comments: [] },
+  { id: 11, name: "Agatha Christie", profile: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=200&auto=format&fit=crop", description: "English writer known for 66 detective novels.", message: "Mystery is not just in the plot, it's in life itself.", comments: [] },
+  { id: 12, name: "J.K. Rowling", profile: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop", description: "British author, best known for Harry Potter series.", message: "Magic lives in stories and imagination.", comments: [] },
+  { id: 13, name: "George R.R. Martin", profile: "https://images.unsplash.com/photo-1531256379411-5b49c7f6e7c1?q=80&w=200&auto=format&fit=crop", description: "American novelist and short-story writer, screenwriter.", message: "A reader lives a thousand lives before he dies.", comments: [] }
+];
+
+
+    const container = document.getElementById('authorsContainer');
+
+    function renderAuthors(list) {
+      container.innerHTML = '';
+      list.forEach(author => {
+        const card = document.createElement('div');
+        card.className = 'author-card p-6 rounded-2xl shadow-lg flex flex-col items-center text-center';
+        card.innerHTML = `
+          <img src="${author.profile}" alt="${author.name}" class="w-24 h-24 rounded-full mb-4 object-cover border-2 border-var(--soot-2)">
+          <h2 class="text-2xl font-semibold mb-2">${author.name}</h2>
+          <p class="text-gray-200 mb-4">${author.description}</p>
+          <p class="author-message cursor-pointer">"${author.message}"</p>
+          <div class="mt-4 w-full">
+            <input type="text" placeholder="Leave a comment..." class="comment-input" />
+            <button class="comment-btn">Post</button>
+            <div class="comments-list mt-2 w-full text-left"></div>
+          </div>
+        `;
+
+        // Expand message
+        card.querySelector('.author-message').addEventListener('click', e => {
+          e.stopPropagation();
+          card.classList.toggle('expanded');
+        });
+
+        // Comment functionality
+        const commentInput = card.querySelector('.comment-input');
+        const commentBtn = card.querySelector('.comment-btn');
+        const commentsList = card.querySelector('.comments-list');
+
+        function updateComments() {
+          commentsList.innerHTML = '';
+          author.comments.forEach(c => {
+            const div = document.createElement('div');
+            div.className = 'comment';
+            div.textContent = c;
+            commentsList.appendChild(div);
+          });
+        }
+
+        commentBtn.addEventListener('click', () => {
+          const text = commentInput.value.trim();
+          if(text){
+            author.comments.push(text);
+            updateComments();
+            commentInput.value = '';
+          }
+        });
+
+        container.appendChild(card);
+      });
+    }
+
+    renderAuthors(authors);
+
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('input', e => {
+      const query = e.target.value.toLowerCase();
+      const filtered = authors.filter(a => a.name.toLowerCase().includes(query));
+      renderAuthors(filtered);
+    });
+  </script>
+</body>
+</html>
