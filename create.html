@@ -5,63 +5,258 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Ink Your Imagination — Book Page</title>
   <style>
-    :root{
-      --header-yellow: #0a0a0a;
-      --page-cream: #757369;
-      --bg-cream: hsl(47, 36%, 90%);
+    :root {
+      --header-dark: #0a0a0a;
+      --page-cream: #f5f1e6;
+      --bg-cream: #f8f5ed;
+      --accent-gold: #d4af37;
+      --accent-red: #ca3530;
+      --text-dark: #222;
+      --text-light: #5a5a5a;
+      --shadow: 0 4px 12px rgba(0,0,0,0.1);
+      --shadow-heavy: 0 8px 24px rgba(0,0,0,0.15);
     }
-    html,body{
-      height:100%;
-      margin:0;
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      height: 100%;
+      margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: var(--bg-cream);
-      color:#000000;
+      color: var(--text-dark);
+      line-height: 1.6;
     }
-    header{
-      background: var(--header-yellow);
-      display:flex;
-      align-items:center;
-      gap:16px;
-      padding:12px 28px;
-      flex-wrap:wrap;
+    
+    header {
+      background: var(--header-dark);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 28px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow);
     }
-    .logo{ display:flex; align-items:center; gap:10px; min-width:160px; }
-    .logo img{ height:54px; border-radius:6px; background:#fff; padding:4px; }
-    .search-wrap{ flex:1 1 380px; display:flex; justify-content:center; }
-    .search-wrap input{ width:100%; max-width:520px; padding:9px 14px; border-radius:24px; border:1px solid rgba(0,0,0,0.12); font-size:14px; }
-    nav{ display:flex; gap:18px; align-items:center; font-weight:600; }
-    nav a{ text-decoration:none; color:#111; font-size:14px; }
+    
+    .logo { 
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+      min-width: 160px; 
+    }
+    
+    .logo img { 
+      height: 54px; 
+      border-radius: 6px; 
+      background: #fff; 
+      padding: 4px; 
+    }
+    
+    .logo-text {
+      color: var(--accent-gold);
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+    
+    .logo-subtext {
+      color: #ddd;
+      font-size: 12px;
+      margin-top: -4px;
+    }
+    
+    .search-wrap { 
+      flex: 1 1 380px; 
+      display: flex; 
+      justify-content: center; 
+    }
+    
+    .search-wrap input { 
+      width: 100%; 
+      max-width: 520px; 
+      padding: 9px 14px; 
+      border-radius: 24px; 
+      border: 1px solid rgba(0,0,0,0.12); 
+      font-size: 14px; 
+      background: #fff;
+    }
+    
+    nav { 
+      display: flex; 
+      gap: 18px; 
+      align-items: center; 
+      font-weight: 600; 
+    }
+    
+    nav a { 
+      text-decoration: none; 
+      color: #ddd; 
+      font-size: 14px; 
+      transition: color 0.3s;
+      position: relative;
+    }
+    
+    nav a:hover {
+      color: var(--accent-gold);
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: var(--accent-gold);
+      transition: width 0.3s;
+    }
+    
+    nav a:hover::after {
+      width: 100%;
+    }
 
-    main{ padding:28px; text-align:center; }
-    h1{ margin:6px 0 22px 0; font-family:'Georgia',serif; letter-spacing:1px; }
-    .canvas-wrap{ display:flex; justify-content:center; }
-    .page-card{ padding:18px; border-radius:8px; max-width:920px; width:100%; }
-    canvas#bookPage{
-      width:100%; max-width:780px; height:auto;
-      border-radius:4px; box-shadow:0 8px 24px rgba(0,0,0,0.12);
-      display:block; margin:0 auto; background:var(--page-cream);
-      border:1px solid rgba(0,0,0,0.06);
+    main { 
+      padding: 28px; 
+      text-align: center; 
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    .btns{ margin-top:16px; display:flex; gap:12px; justify-content:center; }
-    button{ padding:8px 16px; border:none; border-radius:6px; background:#ddd8d8; cursor:pointer; font-weight:600; }
-    button:hover{ background:#202020; }
+    
+    h1 { 
+      margin: 6px 0 22px 0; 
+      font-family: 'Georgia', serif; 
+      letter-spacing: 1px; 
+      color: var(--text-dark);
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 2px;
+      background: var(--accent-gold);
+    }
+    
+    .canvas-wrap { 
+      display: flex; 
+      justify-content: center; 
+      margin-top: 20px;
+    }
+    
+    .page-card { 
+      padding: 24px; 
+      border-radius: 12px; 
+      max-width: 920px; 
+      width: 100%; 
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    
+    canvas#bookPage {
+      width: 100%; 
+      max-width: 780px; 
+      height: auto;
+      border-radius: 8px; 
+      box-shadow: var(--shadow-heavy);
+      display: block; 
+      margin: 0 auto; 
+      background: var(--page-cream);
+      border: 1px solid rgba(0,0,0,0.08);
+      transition: transform 0.3s;
+    }
+    
+    canvas#bookPage:focus {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    }
+    
+    .btns { 
+      margin-top: 24px; 
+      display: flex; 
+      gap: 12px; 
+      justify-content: center; 
+    }
+    
+    button { 
+      padding: 10px 20px; 
+      border: none; 
+      border-radius: 6px; 
+      background: var(--header-dark); 
+      color: white;
+      cursor: pointer; 
+      font-weight: 600; 
+      transition: all 0.3s;
+      min-width: 120px;
+    }
+    
+    button:hover { 
+      background: var(--accent-gold); 
+      color: var(--header-dark);
+      transform: translateY(-2px);
+    }
+    
+    #editBtn {
+      background: var(--header-dark);
+    }
+    
+    #postBtn {
+      background: var(--accent-red);
+    }
+    
+    .info-text {
+      margin-top: 16px;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+    
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .page-card {
+        padding: 16px;
+      }
+      
+      .btns {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      button {
+        width: 100%;
+        max-width: 200px;
+      }
+    }
   </style>
 </head>
 <body>
 
 <header>
   <div class="logo">
-    <img src="images/logo.png" alt="Logo">
+    <img src="Images/logo.png" alt="Logo">
     <div>
-      <div style="font-weight:800;">INK</div>
-      <div style="font-size:12px;margin-top:-4px;">Your Imagination</div>
+      <div class="logo-text">INK & IMAGINATION</div>
+      <div class="logo-subtext">Your Imagination</div>
     </div>
   </div>
   <div class="search-wrap">
     <input type="search" placeholder="Search Your Books" aria-label="Search Your Books" />
   </div>
   <nav>
-    <a href="website.html">HOME</a>
+    <a href="index.html">HOME</a>
     <a href="books.html">BOOK</a>
     <a href="create.html">CREATE NEW</a>
     <a href="login.html">LOGIN</a>
@@ -70,20 +265,28 @@
 
 <main>
   <h1>INK YOUR IMAGINATION</h1>
+  <p class="info-text">Click on the page below and start writing your story. Press Enter for new lines.</p>
+  
   <div class="canvas-wrap">
     <div class="page-card">
       <canvas id="bookPage" width="780" height="620" role="img" aria-label="Book page preview" tabindex="0"></canvas>
       <div class="btns">
-        <button id="editBtn">Edit</button>
-        <button id="postBtn">Post</button>
+        <button id="editBtn">Edit Page</button>
+        <button id="postBtn">Publish Story</button>
       </div>
+      <p class="info-text">Character count: <span id="charCount">0</span></p>
     </div>
   </div>
 </main>
 
+<footer>
+  <p>&copy; 2023 Ink & Imagination. All rights reserved.</p>
+</footer>
+
 <script>
 const canvas = document.getElementById('bookPage');
 const ctx = canvas.getContext('2d');
+const charCountElement = document.getElementById('charCount');
 let currentText = "";
 let cursorVisible = true;
 
@@ -91,19 +294,36 @@ let cursorVisible = true;
 function drawPage(text){
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  // Background
+  // Background with subtle texture
   ctx.fillStyle = '#fff8dc';
   ctx.fillRect(0,0,canvas.width,canvas.height);
+  
+  // Add subtle paper texture
+  for(let i = 0; i < canvas.width; i += 4) {
+    for(let j = 0; j < canvas.height; j += 4) {
+      if(Math.random() > 0.95) {
+        ctx.fillStyle = 'rgba(0,0,0,0.02)';
+        ctx.fillRect(i, j, 1, 1);
+      }
+    }
+  }
 
   // Title
   ctx.fillStyle = '#111';
-  ctx.font = `${Math.round(canvas.width*0.03)}px Georgia`;
+  ctx.font = `bold ${Math.round(canvas.width*0.035)}px Georgia`;
   ctx.textAlign = 'center';
-  ctx.fillText('Chapter 1 — Beginning', canvas.width/2, 28);
+  ctx.fillText('Chapter 1 — The Beginning', canvas.width/2, 38);
+
+  // Decorative line under title
+  ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+  ctx.beginPath();
+  ctx.moveTo(canvas.width/2 - 100, 50);
+  ctx.lineTo(canvas.width/2 + 100, 50);
+  ctx.stroke();
 
   // Margin line
   const marginLeft = Math.round(canvas.width*0.06);
-  ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+  ctx.strokeStyle = 'rgba(0,0,0,0.08)';
   ctx.beginPath();
   ctx.moveTo(marginLeft+6,82);
   ctx.lineTo(marginLeft+6,canvas.height-36);
@@ -144,16 +364,23 @@ function drawPage(text){
 
   // Draw lines
   let y = topY;
-  lines.forEach(l => { ctx.fillText(l, marginLeft+16, y); y += lineHeight; });
+  lines.forEach(l => { 
+    ctx.fillText(l, marginLeft+16, y); 
+    y += lineHeight; 
+  });
 
   // Cursor (if last line visible)
   if(cursorVisible && lines.length>0){
     const lastLine = lines[lines.length-1];
     const cursorX = marginLeft+16 + ctx.measureText(lastLine).width;
     const cursorY = topY + (lines.length-1)*lineHeight;
+    ctx.fillStyle = '#222';
     ctx.fillRect(cursorX, cursorY, 2, lineHeight);
   }
 
+  // Update character count
+  charCountElement.textContent = text.length;
+  
   return maxLines; // return max lines to limit input
 }
 
@@ -165,7 +392,9 @@ canvas.addEventListener('keydown', e=>{
   if(e.key.length===1){
     if(currentLines <= maxLines) currentText += e.key;
   }
-  else if(e.key==='Backspace'){ currentText=currentText.slice(0,-1); }
+  else if(e.key==='Backspace'){ 
+    currentText = currentText.slice(0,-1); 
+  }
   else if(e.key==='Enter'){
     if(currentLines < maxLines) currentText+='\n';
   }
@@ -175,16 +404,31 @@ canvas.addEventListener('keydown', e=>{
 });
 
 // Cursor blink
-setInterval(()=>{ cursorVisible = !cursorVisible; drawPage(currentText); }, 500);
+setInterval(()=>{ 
+  cursorVisible = !cursorVisible; 
+  drawPage(currentText); 
+}, 500);
 
 // Focus canvas on click
 canvas.addEventListener('click', ()=>canvas.focus());
 
 // Buttons
-document.getElementById('editBtn').addEventListener('click', ()=>canvas.focus());
+document.getElementById('editBtn').addEventListener('click', ()=>{
+  canvas.focus();
+  alert("Ready to edit! Click on the page and start typing.");
+});
+
 document.getElementById('postBtn').addEventListener('click', ()=>{
-  if(currentText.trim()===""){ alert("You haven't written anything yet!"); return; }
-  alert("Posted successfully!\n\n"+currentText);
+  if(currentText.trim()===""){ 
+    alert("You haven't written anything yet!"); 
+    return; 
+  }
+  
+  const confirmation = confirm("Are you sure you want to publish this story?");
+  if(confirmation) {
+    alert("Story published successfully!\n\n" + currentText);
+    // In a real app, you would send the text to a server here
+  }
 });
 
 // Make canvas focusable
