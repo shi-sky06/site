@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     :root {
-      /* Classic Library Palette */
       --parchment: #662c1e;
       --parchment-2: #662c1e;
       --ink: #f3eee8;      
@@ -21,101 +20,50 @@
       --soot: #0f0d0b;
       --soot-2: #1a1613;
     }
-
-    html {
-       scroll-behavior: smooth;
-       }
-
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--ink);
       background: radial-gradient(90rem 90rem at 20% -10%, #fff0 55%, rgba(0,0,0,0.03) 56%), var(--parchment);
       min-height: 100dvh;
     }
-
-    .serif {
-       font-family: 'Merriweather', Georgia, 'Times New Roman', serif; 
-      }
-
-    .lift {
-       transition: transform .25s ease, box-shadow .25s ease; 
-      }
-    .lift:hover { 
-      transform: translateY(-4px);
-       box-shadow: 0 12px 24px rgba(0,0,0,.08);
-       }
-
-    .reveal {
-       opacity: 0;
-        transform: translateY(12px);
-        transition: opacity .6s ease, transform .6s ease; 
-      }
-    .reveal.in { opacity: 1;
-       transform: translateY(0); 
-    }
-
-    .link-underline {
-       position: relative; 
-      }
+    .serif { font-family: 'Merriweather', Georgia, 'Times New Roman', serif; }
+    .lift { transition: transform .25s ease, box-shadow .25s ease; }
+    .lift:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,.08); }
+    .reveal { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .link-underline { position: relative; }
     .link-underline::after {
-       content: "";
-        position: absolute;
-         left: 0; 
-         bottom: -2px; 
-         height: 2px;
-          width: 0; 
-          background: var(--garnet); 
-          transition: width .25s ease;
-         }
-    .link-underline:hover::after {
-       width: 100%;
-       }
-
-    #backToTop { 
-      position: fixed;
-       right: 1rem;
-        bottom: 1rem;
-        opacity: 0;
-         pointer-events: none;
-          transform: translateY(8px); 
-          transition: all .25s ease;
-         }
-    #backToTop.show { 
-      opacity: 1;
-       pointer-events: auto;
-        transform: translateY(0);
-       }
-
-    .dark body, body.dark { 
-      color: #f1eadf;
-       background: linear-gradient(180deg, var(--soot) 0%, var(--soot-2) 100%); 
-      }
-    body.dark .card {
-       background: #211a16;
-       border-color: #2b221d;
-       }
-    body.dark .muted { 
-      color: #d7cbbd;
-     }
-    body.dark .soft-border { 
-      border-color: #3b2f28;
-     }
-    body.dark .navbar {
-       background: rgba(24,19,16,.8); 
-       backdrop-filter: blur(6px);
-       }
-    .paper {
-      background: linear-gradient(#fff0, #fff0),
-        repeating-linear-gradient(0deg, rgba(0,0,0,0.03), rgba(0,0,0,0.03) 1px, transparent 1px, transparent 24px),
-        var(--parchment-2);
+      content: ""; position: absolute; left: 0; bottom: -2px; height: 2px; width: 0; background: var(--garnet); transition: width .25s ease;
     }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--garnet);
+      box-shadow: 0 0 0 3px rgba(202, 53, 48, 0.1);
+    }
+
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .link-underline:hover::after { width: 100%; }
+    #backToTop { position: fixed; right: 1rem; bottom: 1rem; opacity: 0; pointer-events: none; transform: translateY(8px); transition: all .25s ease; }
+    #backToTop.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    body.dark { color: #f1eadf; background: linear-gradient(180deg, var(--soot) 0%, var(--soot-2) 100%); }
+    body.dark .card { background: #211a16; border-color: #2b221d; }
+    body.dark .muted { color: #d7cbbd; }
+    body.dark .soft-border { border-color: #3b2f28; }
+    body.dark .navbar { background: rgba(24,19,16,.8); backdrop-filter: blur(6px); }
+    .paper { background: linear-gradient(#fff0, #fff0), repeating-linear-gradient(0deg, rgba(0,0,0,0.03), rgba(0,0,0,0.03) 1px, transparent 1px, transparent 24px), var(--parchment-2); }
   </style>
 </head>
 <body>
   <!-- Nav -->
   <header class="navbar sticky top-0 z-40 border-b soft-border bg-[rgba(246,241,231,0.75)] backdrop-blur-xl">
     <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-4">
-      <img src="images/logo.png" alt="Ink&Imagination Logo" class="h-20 w-auto" >
+      <img src="Images/logo.png" alt="Ink&Imagination Logo" class="h-20 w-auto" >
       <a href="#" class="flex items-center gap-3 group">
         <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--garnet)] text-black shadow">
           <i class="fa-solid fa-feather"></i>
@@ -128,6 +76,7 @@
         <a href="genere.html" class="link-underline">Genres</a>
         <a href="author.html" class="link-underline">Author</a>
         <a href="create.html" class="link-underline">Create</a>
+        <a href="admin.html" class="link-underline">Admin</a>
         <button id="themeToggle" class="px-3 py-1.5 rounded-full border soft-border lift" aria-label="Toggle theme">
           <i class="fa-regular fa-moon"></i>
         </button>
@@ -154,7 +103,7 @@
   <!-- Hero & Main Sections -->
   <section class="relative overflow-hidden h-[80vh]">
     <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover -z-10">
-      <source src="images/4440120-hd_1920_1080_25fps (1).mp4" type="video/mp4">
+      <source src="Images/4440120-hd_1920_1080_25fps (1).mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
     <div class="absolute inset-0 bg-[rgba(246,241,231,0.5)] backdrop-blur-sm -z-5"></div>
@@ -220,7 +169,6 @@
   <!-- Back to top -->
   <button id="backToTop" class="rounded-full p-3 border soft-border lift"><i class="fa-solid fa-arrow-up"></i></button>
 
-  
   <!-- Plans -->
   <section id="plans" class="mx-auto max-w-7xl px-4 py-16">
     <h2 class="serif text-3xl md:text-4xl font-black text-center">Upgrade Your Reading</h2>
@@ -241,16 +189,14 @@
         <div class="text-sm font-semibold tracking-wide text-[var(--olive)]">PREMIUM</div>
         <div class="serif text-4xl font-black mt-2">₹999</div>
         <ul class="mt-6 space-y-2">
-            <li class="flex items-center gap-2"><i class="fa-solid fa-check"></i> Unlimited premium books</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-check"></i> Unlimited premium books</li>
           <li class="flex items-center gap-2"><i class="fa-solid fa-check"></i> Ad‑free experience</li>
           <li class="flex items-center gap-2"><i class="fa-solid fa-check"></i> Early access to releases</li>
           <li class="flex items-center gap-2"><i class="fa-solid fa-check"></i> Offline reading</li>
-          </ul>
+        </ul>
         <button class="mt-6 w-full px-4 py-2 rounded-xl border soft-border">Upgrade</button>
       </div>
 
-
-     
       <div class="card lift rounded-2xl p-6 border soft-border bg-[var(--paper)]">
         <div class="text-sm font-semibold tracking-wide text-[var(--olive)]">AUTHOR</div>
         <div class="serif text-4xl font-black mt-2">₹1999<span class="text-base font-normal">/mo</span></div>
@@ -264,238 +210,537 @@
     </div>
   </section>
 
+
+  <!-- Newsletter -->
+<section class="bg-gradient-to-r from-[var(--garnet)] to-purple-600 py-16">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <h2 class="serif text-3xl md:text-4xl font-black text-white mb-4">
+      Never Miss a Story
+    </h2>
+    <p class="text-white/80 text-lg mb-8">
+      Get weekly book recommendations, author interviews, and exclusive content delivered to your inbox.
+    </p>
+    
+    <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+      <input 
+        type="email" 
+        placeholder="Enter your email" 
+        class="flex-1 px-4 py-3 rounded-full border-0 focus:ring-2 focus:ring-white/30 text-gray-900"
+      >
+      <button class="px-8 py-3 rounded-full bg-white text-[var(--garnet)] font-semibold hover:bg-gray-100 transition">
+        Subscribe
+      </button>
+    </div>
+    
+    <p class="text-white/60 text-sm mt-4">
+      No spam, unsubscribe at any time
+    </p>
+  </div>
+</section>
+
   <!-- Footer -->
   <footer class="border-t soft-border">
     <div class="mx-auto max-w-7xl px-4 py-10 grid md:grid-cols-3 gap-6 items-center">
       <div>
         <div class="serif text-xl font-black">Ink & Imagination</div>
-        <p class="muted mt-2">Where it all begins.  Create boldly.</p>
+        <p class="muted mt-2">Where it all begins. Create boldly.</p>
       </div>
       <div class="md:col-span-2 md:justify-self-end flex gap-4">
         <a href="#" class="link-underline">Privacy</a>
         <a href="#" class="link-underline">Terms</a>
         <a href="#" class="link-underline">Support</a>
+         <p>&copy; 2025 Ink & Imagination. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
   <!-- Login Modal -->
-<div id="loginModal" class="hidden fixed inset-0 bg-white/50 flex items-center justify-center z-50">
-  <div class="relative bg-black dark:bg-[var(--soot-2)] rounded-xl p-6 w-96 max-w-full">
-    <button id="closeModal" type="button" class="absolute top-2 right-2 text-black-1000 hover:text-black-700">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-    <h2 class="serif text-2xl font-bold mb-4">Login</h2>
-    <form class="flex flex-col gap-3">
-      <input type="text" placeholder="Username" class="px-3 py-2 border rounded text-black" required/>
-      <input type="password" placeholder="Password" class="px-3 py-2 border rounded text=black" required/>
-      <button type="submit" class="px-4 py-2 rounded-full text-white" style="background: var(--garnet)">Login</button>
-    </form>
+  <div id="loginModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="relative bg-white dark:bg-[var(--soot-2)] rounded-xl p-6 w-96 max-w-full mx-4">
+      <button id="closeModal" type="button" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+      
+      <!-- Login Form -->
+      <div id="loginForm">
+        <h2 class="serif text-2xl font-bold mb-4 text-gray-800 dark:text-white">Welcome Back</h2>
+        <form id="loginFormElement" class="flex flex-col gap-3">
+          <input type="email" id="loginEmail" placeholder="Email address" class="px-3 py-2 border border-gray-300 rounded text-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required/>
+          <input type="password" id="loginPassword" placeholder="Password" class="px-3 py-2 border border-gray-300 rounded text-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required/>
+          <button type="submit" class="px-4 py-2 rounded-full text-white font-semibold mt-2" style="background: var(--garnet)">Sign In</button>
+        </form>
+        <p class="mt-3 text-sm text-center text-gray-600 dark:text-gray-300">
+          Don't have an account? 
+          <button id="showRegister" class="text-[var(--garnet)] hover:underline font-semibold">Sign up</button>
+        </p>
+      </div>
+      
+      <!-- Register Form -->
+      <div id="registerForm" class="hidden">
+        <h2 class="serif text-2xl font-bold mb-4 text-gray-800 dark:text-white">Create Account</h2>
+        <form id="registerFormElement" class="flex flex-col gap-3">
+          <input type="text" id="registerUsername" placeholder="Username" class="px-3 py-2 border border-gray-300 rounded text-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required/>
+          <input type="email" id="registerEmail" placeholder="Email address" class="px-3 py-2 border border-gray-300 rounded text-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required/>
+          <input type="password" id="registerPassword" placeholder="Password" class="px-3 py-2 border border-gray-300 rounded text-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required/>
+          <button type="submit" class="px-4 py-2 rounded-full text-white font-semibold mt-2" style="background: var(--garnet)">Create Account</button>
+        </form>
+        <p class="mt-3 text-sm text-center text-gray-600 dark:text-gray-300">
+          Already have an account? 
+          <button id="showLogin" class="text-[var(--garnet)] hover:underline font-semibold">Sign in</button>
+        </p>
+      </div>
+      
+      <!-- Messages -->
+      <div id="authMessage" class="mt-3 p-3 rounded hidden text-sm"></div>
+    </div>
   </div>
-</div>  
-<!-- Reader Modal -->
-<div id="readerModal" class="hidden fixed inset-0 bg-black/70 items-center justify-center z-50">
-  <div class="bg-white dark:bg-[var(--soot-2)] rounded-xl p-4 w-11/12 max-w-4xl h-[80vh] flex flex-col">
-    <button id="closeReader" class="self-end text-gray-500 hover:text-gray-700 mb-2">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-    <iframe id="readerFrame" class="flex-1 w-full border rounded" src="" frameborder="0"></iframe>
+
+  <!-- Reader Modal -->
+  <div id="readerModal" class="hidden fixed inset-0 bg-black/70 items-center justify-center z-50">
+    <div class="bg-white dark:bg-[var(--soot-2)] rounded-xl p-4 w-11/12 max-w-4xl h-[80vh] flex flex-col">
+      <button id="closeReader" class="self-end text-gray-500 hover:text-gray-700 mb-2">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <iframe id="readerFrame" class="flex-1 w-full border rounded" src="" frameborder="0"></iframe>
+    </div>
   </div>
-</div>
 
+  <script>
+    // ===== BOOKS DATA AND FUNCTIONS =====
+    const BOOKS = [
+      {title: "The Afternoon of Life", cover: "https://images-platform.99static.com//DVdRV5U4mxS9rlJpQyMtbl05LLY=/404x172:1456x1225/fit-in/500x500/projects-files/183/18364/1836425/e4190f79-e06d-4305-aff2-933124137728.jpg"},
+      {title: "Hidden Treasure", cover: "https://images.crowdspring.com/blog/wp-content/uploads/2018/09/27130903/rsz_hidden_treasure_smarikaahuja.png"},
+      {title: "The Winner Maker", cover: "https://images-platform.99static.com//IVer2mlwoEKEEWVWiI6sY-opXKY=/337x36:1414x1113/fit-in/500x500/projects-files/67/6798/679883/4e42040c-537b-4f99-b197-b54dcf6f520a.jpg"},
+      {title: "Make your own happiness", cover: "https://static.vecteezy.com/system/resources/thumbnails/000/217/193/small_2x/motivational-book-cover-with-hand-lettering.jpg"},
+      {title: "Still Single", cover: "https://images-platform.99static.com//tPNd5NweQgRCvWkb-y63B-YraHQ=/401x176:1458x1234/fit-in/500x500/projects-files/182/18278/1827808/85922e8c-e238-45ab-b8d8-f836c4667e4c.jpg"},
+      {title: "Insights", cover: "https://images-platform.99static.com//RybqcokWrO13wFtN4YOjghdGf0Q=/475x138:1528x1191/fit-in/590x590/projects-files/170/17034/1703459/d4cff965-f099-4c3a-9ba6-9ed0b3887df4.jpg"},
+      {title: "Simple", cover: "https://m.media-amazon.com/images/I/61sbo8zRifL._UF1000,1000_QL80_.jpg"},
+      {title: "Autumn", cover: "https://png.pngtree.com/template/20200807/ourmid/pngtree-color-matching-autumn-photography-book-cover-design-image_400413.jpg"},
+      {title: "Book Mockup", cover: "https://goodmockups.com/wp-content/uploads/2024/08/Free-Book-Title-Spine-Mockup-PSD.jpg"},
+      {title: "Intuition", cover: "https://i.pinimg.com/736x/71/be/d7/71bed7e22855c30309b47ee9a3083001.jpg"},
+      {title: "Through the Breaking", cover: "https://i.pinimg.com/originals/f5/47/20/f547208555040a3dd2a11b794551db03.jpg"},
+      {title: "The Periodic Table", cover: "https://i.pinimg.com/236x/19/43/18/194318d0916aea3bbb4d4a21323b34d2.jpg"},
+      {title: "West", cover: "https://i.pinimg.com/originals/95/33/86/9533864512b95c00ec38876297014ea9.jpg"},
+      {title: "Where He Comes There Is Light", cover: "https://cdn.novelupdates.com/images/2024/12/Where-He-Comes-There-Is-Light.jpg"},
+      {title: "Waiting For You In A City", cover: "https://cdn.novelupdates.com/images/2020/05/Waiting-for-You-in-a-City4.jpg"},
+      {title: "Displaying Beautiful Brocade", cover: "https://cdn.novelupdates.com/images/2025/02/Displaying-Beautiful-Brocade.jpg"},
+      {title: "Thousand Miles of Bright Moonlight", cover: "https://cdn.novelupdates.com/images/2021/03/Thousand-Miles-of-Bright-Moonlight.jpg"},
+      {title: "Series 2378", cover: "https://cdn.novelupdates.com/imgmid/series_2378.jpg"},
+      {title: "Secrect marriage", cover: "https://cdn.novelupdates.com/images/2019/11/9787559407139.jpg"},
+      {title: "Chun Tai Ji Ming", cover: "https://cdn.novelupdates.com/images/2025/03/Chun-Tai-Ji-Ming.jpg"},
+      {title: "Jun Jiuling", cover: "https://cdn.novelupdates.com/images/2017/06/Jun-Jiuling.jpg"},
+      {title: "Mystery Book", cover: "https://i.pinimg.com/736x/8e/98/24/8e9824c01f9d252372bca72fd01f959e.jpg"},
+      {title: "Goodreads Book", cover: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1513786433i/36154097._UX160_.jpg"},
+      {title: "Woman Who Walked Into The Sea", cover: "https://booksplease.org/wp-content/uploads/2020/10/woman-who-walked-into-the-sea.jpg"},
+      {title: "William Blake", cover: "https://c8.alamy.com/comp/JTG3G9/william-blake-the-book-of-thel-plate-2-title-page-JTG3G9.jpg"},
+      {title: "Pin Book 1", cover: "https://i.pinimg.com/236x/ea/90/ba/ea90bafd17d4b716b3cdf268c13d0265.jpg"},
+      {title: "Pin Book 2", cover: "https://i.pinimg.com/236x/2f/f8/70/2ff870b6d40745c1be9bd94a506905cb.jpg"},
+      {title: "Sample Book 1", cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794"},
+      {title: "Sample Book 2", cover: "https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d"}
+    ];
 
+    let showAllBooks = false;
+    const GENRES = ['All', 'Fiction', 'Romance', 'Mystery', 'Sci‑Fi', 'Horror'];
+    let activeGenre = 'All';
+    let query = '';
 
-<script>
+    const booksGrid = document.getElementById('booksGrid');
+    const resultCount = document.getElementById('resultCount');
+    const searchInput = document.getElementById('searchInput');
+    const genreChips = document.getElementById('genreChips');
+    const noResults = document.getElementById('noResults');
 
-const loginModal = document.getElementById('loginModal');
-  const loginBtn = document.getElementById('loginBtn');
-  const closeModal = document.getElementById('closeModal');
+    // Render genre buttons
+    function renderGenres() {
+      genreChips.innerHTML = GENRES.map(g => `
+        <button data-genre="${g}" class="px-4 py-2 rounded-full border soft-border lift text-sm ${g === activeGenre ? 'text-white bg-[var(--garnet)]' : ''}">${g}</button>
+      `).join('');
 
-  loginBtn.addEventListener('click', () => loginModal.classList.remove('hidden'));
-  closeModal.addEventListener('click', () => loginModal.classList.add('hidden'));
-
-  // Close modal if click outside
-  loginModal.addEventListener('click', (e) => {
-    if(e.target === loginModal) loginModal.classList.add('hidden');
-  });
-
-
-  const loginBtnMobile = document.getElementById('loginBtnMobile');
-  if(loginBtnMobile){
-    loginBtnMobile.addEventListener('click', () => loginModal.classList.remove('hidden'));
-  }
-
-
-  function toggleDarkMode() {
-  document.body.classList.toggle('dark');
-  const icon = themeToggle.querySelector('i');
-  if (document.body.classList.contains('dark')) {
-    icon.classList.remove('fa-moon');
-    icon.classList.add('fa-sun');
-  } else {
-    icon.classList.remove('fa-sun');
-    icon.classList.add('fa-moon');
-  }
-}
-
-  // ----- Book Data -----
-  const BOOKS = [
-    {title: "The Afternoon of Life", cover: "https://images-platform.99static.com//DVdRV5U4mxS9rlJpQyMtbl05LLY=/404x172:1456x1225/fit-in/500x500/projects-files/183/18364/1836425/e4190f79-e06d-4305-aff2-933124137728.jpg"},
-    {title: "Hidden Treasure", cover: "https://images.crowdspring.com/blog/wp-content/uploads/2018/09/27130903/rsz_hidden_treasure_smarikaahuja.png"},
-    {title: "The Winner Maker", cover: "https://images-platform.99static.com//IVer2mlwoEKEEWVWiI6sY-opXKY=/337x36:1414x1113/fit-in/500x500/projects-files/67/6798/679883/4e42040c-537b-4f99-b197-b54dcf6f520a.jpg"},
-    {title: "Make your own happiness", cover: "https://static.vecteezy.com/system/resources/thumbnails/000/217/193/small_2x/motivational-book-cover-with-hand-lettering.jpg"},
-    {title: "Still Single", cover: "https://images-platform.99static.com//tPNd5NweQgRCvWkb-y63B-YraHQ=/401x176:1458x1234/fit-in/500x500/projects-files/182/18278/1827808/85922e8c-e238-45ab-b8d8-f836c4667e4c.jpg"},
-    {title: "Insights", cover: "https://images-platform.99static.com//RybqcokWrO13wFtN4YOjghdGf0Q=/475x138:1528x1191/fit-in/590x590/projects-files/170/17034/1703459/d4cff965-f099-4c3a-9ba6-9ed0b3887df4.jpg"},
-    {title: "Simple", cover: "https://m.media-amazon.com/images/I/61sbo8zRifL._UF1000,1000_QL80_.jpg"},
-    {title: "Autumn", cover: "https://png.pngtree.com/template/20200807/ourmid/pngtree-color-matching-autumn-photography-book-cover-design-image_400413.jpg"},
-    {title: "Book Mockup", cover: "https://goodmockups.com/wp-content/uploads/2024/08/Free-Book-Title-Spine-Mockup-PSD.jpg"},
-    {title: "Intuition", cover: "https://i.pinimg.com/736x/71/be/d7/71bed7e22855c30309b47ee9a3083001.jpg"},
-    {title: "Through the Breaking", cover: "https://i.pinimg.com/originals/f5/47/20/f547208555040a3dd2a11b794551db03.jpg"},
-    {title: "The Periodic Table", cover: "https://i.pinimg.com/236x/19/43/18/194318d0916aea3bbb4d4a21323b34d2.jpg"},
-    {title: "West", cover: "https://i.pinimg.com/originals/95/33/86/9533864512b95c00ec38876297014ea9.jpg"},
-    {title: "Where He Comes There Is Light", cover: "https://cdn.novelupdates.com/images/2024/12/Where-He-Comes-There-Is-Light.jpg"},
-    {title: "Waiting For You In A City", cover: "https://cdn.novelupdates.com/images/2020/05/Waiting-for-You-in-a-City4.jpg"},
-    {title: "Displaying Beautiful Brocade", cover: "https://cdn.novelupdates.com/images/2025/02/Displaying-Beautiful-Brocade.jpg"},
-    {title: "Thousand Miles of Bright Moonlight", cover: "https://cdn.novelupdates.com/images/2021/03/Thousand-Miles-of-Bright-Moonlight.jpg"},
-    {title: "Series 2378", cover: "https://cdn.novelupdates.com/imgmid/series_2378.jpg"},
-    {title: "Secrect marriage", cover: "https://cdn.novelupdates.com/images/2019/11/9787559407139.jpg"},
-    {title: "Chun Tai Ji Ming", cover: "https://cdn.novelupdates.com/images/2025/03/Chun-Tai-Ji-Ming.jpg"},
-    {title: "Jun Jiuling", cover: "https://cdn.novelupdates.com/images/2017/06/Jun-Jiuling.jpg"},
-    {title: "Mystery Book", cover: "https://i.pinimg.com/736x/8e/98/24/8e9824c01f9d252372bca72fd01f959e.jpg"},
-    {title: "Goodreads Book", cover: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1513786433i/36154097._UX160_.jpg"},
-    {title: "Woman Who Walked Into The Sea", cover: "https://booksplease.org/wp-content/uploads/2020/10/woman-who-walked-into-the-sea.jpg"},
-    {title: "William Blake", cover: "https://c8.alamy.com/comp/JTG3G9/william-blake-the-book-of-thel-plate-2-title-page-JTG3G9.jpg"},
-    {title: "Pin Book 1", cover: "https://i.pinimg.com/236x/ea/90/ba/ea90bafd17d4b716b3cdf268c13d0265.jpg"},
-    {title: "Pin Book 2", cover: "https://i.pinimg.com/236x/2f/f8/70/2ff870b6d40745c1be9bd94a506905cb.jpg"},
-    {title: "Sample Book 1", cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794"},
-    {title: "Sample Book 2", cover: "https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d"}
-  ];
-
-  let showAllBooks = false; 
-
-  const GENRES = ['All', 'Fiction', 'Romance', 'Mystery', 'Sci‑Fi', 'Horror'];
-  let activeGenre = 'All';
-  let query = '';
-
-  const booksGrid = document.getElementById('booksGrid');
-  const resultCount = document.getElementById('resultCount');
-  const searchInput = document.getElementById('searchInput');
-  const genreChips = document.getElementById('genreChips');
-  const noResults = document.getElementById('noResults');
-
-  // Render genre buttons
-  function renderGenres() {
-    genreChips.innerHTML = GENRES.map(g => `
-      <button data-genre="${g}" class="px-4 py-2 rounded-full border soft-border lift text-sm ${g === activeGenre ? 'text-white bg-[var(--garnet)]' : ''}">${g}</button>
-    `).join('');
-
-    [...genreChips.querySelectorAll('button')].forEach(btn => {
-      btn.addEventListener('click', () => {
-        activeGenre = btn.dataset.genre;
-        renderGenres();
-        renderBooks();
+      [...genreChips.querySelectorAll('button')].forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeGenre = btn.dataset.genre;
+          renderGenres();
+          renderBooks();
+        });
       });
-    });
-  }
+    }
 
-  // Filter books
-  function getFilteredBooks() {
-    return BOOKS.filter(b => {
-      const matchesGenre = activeGenre === 'All' || (b.genre && b.genre.toLowerCase() === activeGenre.toLowerCase());
-      const q = query.trim().toLowerCase();
-      const matchesQuery = !q || b.title.toLowerCase().includes(q) || (b.author && b.author.toLowerCase().includes(q));
-      return matchesGenre && matchesQuery;
-    });
-  }
+    // Filter books
+    function getFilteredBooks() {
+      return BOOKS.filter(b => {
+        const matchesGenre = activeGenre === 'All' || (b.genre && b.genre.toLowerCase() === activeGenre.toLowerCase());
+        const q = query.trim().toLowerCase();
+        const matchesQuery = !q || b.title.toLowerCase().includes(q) || (b.author && b.author.toLowerCase().includes(q));
+        return matchesGenre && matchesQuery;
+      });
+    }
 
-  // Render books
-  function renderBooks() {
-    let list = getFilteredBooks();
+    // Render books
+    function renderBooks() {
+      let list = getFilteredBooks();
 
-    // Show only first 12 unless viewAll
-    if (!showAllBooks && list.length > 12) {
-      list = list.slice(0, 12);
-      if (!document.getElementById('viewMoreBtn')) {
-        const btn = document.createElement('button');
-        btn.id = 'viewMoreBtn';
-        btn.textContent = 'View More';
-        btn.className = 'mt-4 px-6 py-2 rounded-full border soft-border lift';
-        btn.addEventListener('click', () => { showAllBooks = true; renderBooks(); });
-        booksGrid.after(btn);
+      // Show only first 12 unless viewAll
+      if (!showAllBooks && list.length > 12) {
+        list = list.slice(0, 12);
+        if (!document.getElementById('viewMoreBtn')) {
+          const btn = document.createElement('button');
+          btn.id = 'viewMoreBtn';
+          btn.textContent = 'View More';
+          btn.className = 'mt-4 px-6 py-2 rounded-full border soft-border lift';
+          btn.addEventListener('click', () => { showAllBooks = true; renderBooks(); });
+          booksGrid.after(btn);
+        }
+      } else {
+        const existingBtn = document.getElementById('viewMoreBtn');
+        if (existingBtn) existingBtn.remove();
       }
-    } else {
-      const existingBtn = document.getElementById('viewMoreBtn');
-      if (existingBtn) existingBtn.remove();
+
+      resultCount.textContent = list.length;
+      noResults.classList.toggle('hidden', list.length !== 0);
+
+      booksGrid.innerHTML = list.map((b, i) => `
+        <article class="card lift rounded-2xl border soft-border bg-[var(--paper)] overflow-hidden reveal" data-index="${i}">
+          <img src="${b.cover}" alt="${b.title} cover" class="h-44 w-full object-cover" loading="lazy"/>
+          <div class="p-3">
+            <div class="serif font-bold leading-tight line-clamp-2">${b.title}</div>
+            <div class="text-sm muted">${b.author || ''}</div>
+          </div>
+        </article>
+      `).join('');
+
+      // Add click to read functionality
+      document.querySelectorAll('.card').forEach((card, i) => {
+        card.addEventListener('click', () => openReader(list[i]));
+      });
+
+      observeReveals();
     }
 
-    resultCount.textContent = list.length;
-    noResults.classList.toggle('hidden', list.length !== 0);
+    // Search
+    searchInput.addEventListener('input', e => { query = e.target.value; renderBooks(); });
 
-    booksGrid.innerHTML = list.map((b, i) => `
-      <article class="card lift rounded-2xl border soft-border bg-[var(--paper)] overflow-hidden reveal" data-index="${i}">
-        <img src="${b.cover}" alt="${b.title} cover" class="h-44 w-full object-cover" loading="lazy"/>
-        <div class="p-3">
-          <div class="serif font-bold leading-tight line-clamp-2">${b.title}</div>
-          <div class="text-sm muted">${b.author || ''}</div>
-        </div>
-      </article>
-    `).join('');
-
-    // Add click to read functionality
-    document.querySelectorAll('.card').forEach((card, i) => {
-      card.addEventListener('click', () => openReader(list[i]));
+    // Reader modal close
+    document.getElementById('closeReader').addEventListener('click', () => {
+      const readerModal = document.getElementById('readerModal');
+      readerModal.classList.add('hidden');
+      document.getElementById('readerFrame').src = '';
     });
 
-    observeReveals();
-  }
-
-  // Search
-  searchInput.addEventListener('input', e => { query = e.target.value; renderBooks(); });
-
-  // Reader modal close
-  document.getElementById('closeReader').addEventListener('click', () => {
-    const readerModal = document.getElementById('readerModal');
-    readerModal.classList.add('hidden');
-    document.getElementById('readerFrame').src = '';
-  });
-
-  function openReader(book) {
-    document.getElementById('readerFrame').src = book.url || '';
-    document.getElementById('readerModal').classList.remove('hidden');
-  }
-
-  // Reveal on scroll
-  let observer;
-  function observeReveals() {
-    const nodes = document.querySelectorAll('.reveal');
-    if (!observer) {
-      observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('in'); });
-      }, { threshold: 0.08 });
+    function openReader(book) {
+      document.getElementById('readerFrame').src = book.url || '';
+      document.getElementById('readerModal').classList.remove('hidden');
     }
-    nodes.forEach(n => observer.observe(n));
-  }
 
-  // Initial render
-  renderGenres();
-  renderBooks();
-  observeReveals();
+    // Reveal on scroll
+    let observer;
+    function observeReveals() {
+      const nodes = document.querySelectorAll('.reveal');
+      if (!observer) {
+        observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('in'); });
+        }, { threshold: 0.08 });
+      }
+      nodes.forEach(n => observer.observe(n));
+    }
 
+    // ===== AUTHENTICATION CODE =====
+    const API_BASE_URL = 'http://localhost:3001/api';
 
-  // Dark mode toggle
-const themeToggle = document.getElementById('themeToggle');
-const themeToggleMobile = document.getElementById('themeToggleMobile');
+    // Auth functions
+    async function registerUser(userData) {
+      try {
+        const response = await fetch(`${API_BASE_URL}/auth/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData)
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(data.error || 'Registration failed');
+        }
+        
+        return data;
+      } catch (error) {
+        throw new Error(error.message || 'Network error. Please try again.');
+      }
+    }
 
-function toggleDarkMode() {
-  document.body.classList.toggle('dark');
-}
+    async function loginUser(credentials) {
+      try {
+        const response = await fetch(`${API_BASE_URL}/auth/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(credentials)
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(data.error || 'Login failed');
+        }
+        
+        return data;
+      } catch (error) {
+        throw new Error(error.message || 'Network error. Please try again.');
+      }
+    }
 
-themeToggle.addEventListener('click', toggleDarkMode);
-themeToggleMobile.addEventListener('click', toggleDarkMode);
+    // Auth modal functionality
+    function initializeAuth() {
+      const loginModal = document.getElementById('loginModal');
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const showRegisterBtn = document.getElementById('showRegister');
+      const showLoginBtn = document.getElementById('showLogin');
+      const authMessage = document.getElementById('authMessage');
 
-</script>
+      function showMessage(message, type = 'error') {
+        if (!authMessage) return;
+        authMessage.textContent = message;
+        authMessage.className = `mt-3 p-3 rounded text-sm ${type === 'error' ? 'bg-red-100 text-red-700 border border-red-200' : 'bg-green-100 text-green-700 border border-green-200'}`;
+        authMessage.classList.remove('hidden');
+        
+        setTimeout(() => {
+          authMessage.classList.add('hidden');
+        }, 5000);
+      }
 
+      // Toggle between login and register forms
+      if (showRegisterBtn) {
+        showRegisterBtn.addEventListener('click', () => {
+          loginForm.classList.add('hidden');
+          registerForm.classList.remove('hidden');
+          authMessage.classList.add('hidden');
+        });
+      }
+
+      if (showLoginBtn) {
+        showLoginBtn.addEventListener('click', () => {
+          registerForm.classList.add('hidden');
+          loginForm.classList.remove('hidden');
+          authMessage.classList.add('hidden');
+        });
+      }
+
+      // Login form submission
+      if (document.getElementById('loginFormElement')) {
+        document.getElementById('loginFormElement').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          const email = document.getElementById('loginEmail').value;
+          const password = document.getElementById('loginPassword').value;
+          
+          // Show loading state
+          const submitBtn = e.target.querySelector('button[type="submit"]');
+          const originalText = submitBtn.textContent;
+          submitBtn.textContent = 'Signing in...';
+          submitBtn.disabled = true;
+          
+          try {
+            const result = await loginUser({ email, password });
+            localStorage.setItem('token', result.token);
+            localStorage.setItem('user', JSON.stringify(result.user));
+            
+            showMessage('Login successful! Redirecting...', 'success');
+            setTimeout(() => {
+              loginModal.classList.add('hidden');
+              updateAuthUI();
+              // Reset forms
+              e.target.reset();
+              if (document.getElementById('registerFormElement')) {
+                document.getElementById('registerFormElement').reset();
+              }
+            }, 1500);
+            
+          } catch (error) {
+            showMessage(error.message);
+          } finally {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+          }
+        });
+      }
+
+      // Register form submission
+      if (document.getElementById('registerFormElement')) {
+        document.getElementById('registerFormElement').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          const username = document.getElementById('registerUsername').value;
+          const email = document.getElementById('registerEmail').value;
+          const password = document.getElementById('registerPassword').value;
+          
+          // Show loading state
+          const submitBtn = e.target.querySelector('button[type="submit"]');
+          const originalText = submitBtn.textContent;
+          submitBtn.textContent = 'Creating account...';
+          submitBtn.disabled = true;
+          
+          try {
+            const result = await registerUser({ username, email, password });
+            localStorage.setItem('token', result.token);
+            localStorage.setItem('user', JSON.stringify(result.user));
+            
+            showMessage('Account created successfully! Welcome!', 'success');
+            setTimeout(() => {
+              loginModal.classList.add('hidden');
+              updateAuthUI();
+              // Reset forms and switch to login
+              registerForm.classList.add('hidden');
+              loginForm.classList.remove('hidden');
+              e.target.reset();
+            }, 1500);
+            
+          } catch (error) {
+            showMessage(error.message);
+          } finally {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+          }
+        });
+      }
+
+      // Close modal events
+      const closeModalBtn = document.getElementById('closeModal');
+      if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+          loginModal.classList.add('hidden');
+          // Reset forms and view
+          if (loginForm) loginForm.classList.remove('hidden');
+          if (registerForm) registerForm.classList.add('hidden');
+          if (authMessage) authMessage.classList.add('hidden');
+          if (document.getElementById('loginFormElement')) document.getElementById('loginFormElement').reset();
+          if (document.getElementById('registerFormElement')) document.getElementById('registerFormElement').reset();
+        });
+      }
+
+      if (loginModal) {
+        loginModal.addEventListener('click', (e) => {
+          if (e.target === loginModal) {
+            loginModal.classList.add('hidden');
+            // Reset forms and view
+            if (loginForm) loginForm.classList.remove('hidden');
+            if (registerForm) registerForm.classList.add('hidden');
+            if (authMessage) authMessage.classList.add('hidden');
+            if (document.getElementById('loginFormElement')) document.getElementById('loginFormElement').reset();
+            if (document.getElementById('registerFormElement')) document.getElementById('registerFormElement').reset();
+          }
+        });
+      }
+    }
+
+    // Update UI based on auth status
+    function updateAuthUI() {
+      const user = JSON.parse(localStorage.getItem('user') || 'null');
+      const loginBtn = document.getElementById('loginBtn');
+      const loginBtnMobile = document.getElementById('loginBtnMobile');
+      
+      if (user && loginBtn) {
+        loginBtn.innerHTML = `<i class="fa-solid fa-user mr-2"></i>${user.username}`;
+        if (loginBtnMobile) {
+          loginBtnMobile.innerHTML = `<i class="fa-solid fa-user mr-2"></i>${user.username}`;
+        }
+        
+        // Add logout functionality
+        loginBtn.onclick = () => {
+          if (confirm('Are you sure you want to logout?')) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            updateAuthUI();
+          }
+        };
+        
+        if (loginBtnMobile) {
+          loginBtnMobile.onclick = () => {
+            if (confirm('Are you sure you want to logout?')) {
+              localStorage.removeItem('token');
+              localStorage.removeItem('user');
+              updateAuthUI();
+            }
+          };
+        }
+      } else {
+        if (loginBtn) {
+          loginBtn.innerHTML = 'Login';
+          loginBtn.onclick = () => {
+            const loginModal = document.getElementById('loginModal');
+            if (loginModal) loginModal.classList.remove('hidden');
+          };
+        }
+        
+        if (loginBtnMobile) {
+          loginBtnMobile.innerHTML = 'Login';
+          loginBtnMobile.onclick = () => {
+            const loginModal = document.getElementById('loginModal');
+            if (loginModal) loginModal.classList.remove('hidden');
+          };
+        }
+      }
+    }
+
+    // Mobile menu login button
+    function initializeMobileLogin() {
+      const loginBtnMobile = document.getElementById('loginBtnMobile');
+      if (loginBtnMobile) {
+        loginBtnMobile.addEventListener('click', () => {
+          const loginModal = document.getElementById('loginModal');
+          if (loginModal) loginModal.classList.remove('hidden');
+        });
+      }
+    }
+
+    // Check if user is logged in on page load
+    function checkAuthStatus() {
+      const token = localStorage.getItem('token');
+      const user = localStorage.getItem('user');
+      
+      if (token && user) {
+        console.log('User is logged in:', JSON.parse(user));
+      }
+    }
+
+    // ===== DARK MODE TOGGLE =====
+    const themeToggle = document.getElementById('themeToggle');
+    const themeToggleMobile = document.getElementById('themeToggleMobile');
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      const icon = themeToggle.querySelector('i');
+      if (document.body.classList.contains('dark')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    }
+
+    if (themeToggle) {
+      themeToggle.addEventListener('click', toggleDarkMode);
+    }
+    if (themeToggleMobile) {
+      themeToggleMobile.addEventListener('click', toggleDarkMode);
+    }
+
+    // ===== INITIALIZE EVERYTHING =====
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize books functionality
+      renderGenres();
+      renderBooks();
+      observeReveals();
+      
+      // Initialize auth functionality
+      initializeAuth();
+      initializeMobileLogin();
+      updateAuthUI();
+      checkAuthStatus();
+    });
+  </script>
 </body>
 </html>
-
-
