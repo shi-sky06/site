@@ -1,330 +1,746 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>View All Books</title>
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Books - Ink & Imagination</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
     :root {
-        --parchment: #0a0a0a;
-  --parchment-2: #f0dbc2;
-  --ink: #ddd0c0;      
-  --ink-2: #0b0b0c;    
-  --garnet: #f71a12;
-  --gold: #f1594e;
-  --olive: #6b7a40;
-  --paper: #030303;
-  --soot: #0f0d0b;
-  --soot-2: #c5beb9; 
+      --parchment: #662c1e;
+      --parchment-2: #662c1e;
+      --ink: #f3eee8;      
+      --ink-2: #0b0b0c;    
+      --garnet: #ca3530;
+      --gold: #ca3530;
+      --olive: #6b7a40;
+      --paper: #030303;
+      --soot: #0f0d0b;
+      --soot-2: #1a1613;
     }
-
+    html { scroll-behavior: smooth; }
     body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: var(--parchment-2);
-        color: var(--ink-2);
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(90rem 90rem at 20% -10%, #fff0 55%, rgba(0,0,0,0.03) 56%), var(--parchment);
+      min-height: 100dvh;
     }
-
-    header {
-        background-color: var(--parchment);
-        padding: 15px 20px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
+    .serif { font-family: 'Merriweather', Georgia, 'Times New Roman', serif; }
+    .lift { transition: transform .25s ease, box-shadow .25s ease; }
+    .lift:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,.08); }
+    .reveal { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .link-underline { position: relative; }
+    .link-underline::after {
+      content: ""; position: absolute; left: 0; bottom: -2px; height: 2px; width: 0; background: var(--garnet); transition: width .25s ease;
     }
-
-    .logo {
-        display: flex;
-        align-items: center;
-    }
-
-    .logo img {
-        height: 60px;
-        margin-right: 10px;
-    }
-
-    .logo h4 {
-        margin: 0;
-        color: var(--ink-2);
-        font-weight: bold;
-        letter-spacing: 1px;
-        color: #ddd0c0;
-    }
-
-    .search-box {
-        display: flex;
-        align-items: center;
-        background: var(--ink);
-        padding: 5px 10px;
-        border-radius: 20px;
-        border: 1px solid var(--soot-2);
-        width: 300px;
-        margin: 10px 0;
-    }
-
-    .search-box input {
-        border: none;
-        outline: none;
-        flex: 1;
-        padding: 5px;
-        font-size: 14px;
-        border-radius: 20px;
-        background: var(--ink);
-        color: var(--ink-2);
-    }
-
-    nav a {
-        text-decoration: none;
-        margin: 0 10px;
-        color: var(--ink-2);
-        font-weight: bold;
-        transition: 0.3s;
-        color: #c5beb9;
-    }
-
-    nav a:hover {
-        color: var(--garnet);
-    }
-
-    h2 {
-        text-align: center;
-        margin-top: 20px;
-        color: var(--ink-2);
-    }
-
-    .books-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 20px;
-        padding: 20px;
-    }
-
-    .book-card {
-        position: relative;
-        text-align: center;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        background: var(--ink);
-        transition: transform 0.3s;
-    }
-
-    .book-card img {
-        width: 100%;
-        height: 220px;
-        object-fit: cover;
-        transition: transform 0.3s;
-    }
-
-    .book-card:hover img {
-        transform: scale(1.1);
-    }
-
-    .book-card .book-title {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        background: rgba(202, 53, 48, 0.85); /* gold/garnet overlay */
-        color: var(--ink);
-        font-weight: bold;
-        padding: 5px 0;
-        opacity: 0;
-        transition: opacity 0.3s;
-        font-size: 14px;
-    }
-
-    .book-card:hover .book-title {
-        opacity: 1;
-    }
-
-    #loadMoreBtn {
-        display: block;
-        margin: 20px auto;
-        padding: 10px 20px;
-        background: var(--garnet);
-        color: var(--ink);
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-        transition:background 0.3s;
-    }
-
-    #loadMoreBtn:hover {
-        background: var(--gold);
-    }
-
-    footer {
-        background-color: var(--soot);
-        padding: 20px;
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        font-size: 14px;
-        color: var(--ink);
-    }
-
-    footer div {
-        margin: 10px;
-    }
-
-    .footer-title {
-        font-weight: bold;
-        margin-bottom: 8px;
-    }
-
-    footer div div:hover {
-        color: var(--garnet);
-        cursor: pointer;
-    }
-
-    .app-buttons img {
-        height: 40px;
-        margin: 5px 0;
-        cursor: pointer;
-    }
-
-    @media (max-width: 600px) {
-        .books-container {
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        }
-        .book-card img {
-            height: 180px;
-        }
-        .search-box {
-            width: 100%;
-        }
-    }
-</style>
+    .link-underline:hover::after { width: 100%; }
+    body.dark { color: #f1eadf; background: linear-gradient(180deg, var(--soot) 0%, var(--soot-2) 100%); }
+    body.dark .card { background: #211a16; border-color: #2b221d; }
+    body.dark .muted { color: #d7cbbd; }
+    body.dark .soft-border { border-color: #3b2f28; }
+    body.dark .navbar { background: rgba(24,19,16,.8); backdrop-filter: blur(6px); }
+    .paper { background: linear-gradient(#fff0, #fff0), repeating-linear-gradient(0deg, rgba(0,0,0,0.03), rgba(0,0,0,0.03) 1px, transparent 1px, transparent 24px), var(--parchment-2); }
+    .star-rating { color: #fbbf24; }
+  </style>
 </head>
 <body>
+  <!-- Nav -->
+  <header class="navbar sticky top-0 z-40 border-b soft-border bg-[rgba(246,241,231,0.75)] backdrop-blur-xl">
+    <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-4">
+      <img src="Images/logo.png" alt="Ink&Imagination Logo" class="h-20 w-auto" >
+      <a href="index.html" class="flex items-center gap-3 group">
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--garnet)] text-black shadow">
+          <i class="fa-solid fa-feather"></i>
+        </span>
+        <span class="serif text-xl font-black tracking-wide text-[var(--ink)] group-hover:text-[var(--garnet)] transition">Ink&nbsp;&amp;&nbsp;Imagination</span>
+      </a>
 
-<header>
-    <div class="logo">
-        <img src="images/logo.png" alt="Logo">
-        <h4>INK&IMAGINATION</h4>
+      <div class="ml-auto hidden md:flex items-center gap-6">
+        <a href="index.html" class="link-underline font-semibold">Home</a>
+        <a href="books.html" class="link-underline font-semibold">Books</a>
+        <a href="genere.html" class="link-underline">Genres</a>
+        <a href="author.html" class="link-underline">Author</a>
+        <a href="create.html" class="link-underline">Create</a>
+        <a href="admin.html" class="link-underline">Admin</a>
+        <button id="themeToggle" class="px-3 py-1.5 rounded-full border soft-border lift" aria-label="Toggle theme">
+          <i class="fa-regular fa-moon"></i>
+        </button>
+        <button id="loginBtn" class="px-4 py-2 rounded-full lift text-white" style="background: var(--garnet)">Login</button>
+      </div>
+
+      <button class="md:hidden ml-auto text-xl" id="mobileMenuBtn" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
     </div>
-    <div class="search-box">
-        <input type="text" placeholder="Search Your Books" id="searchInput">
+  </header>
+
+  <!-- Books Header -->
+  <section class="max-w-7xl mx-auto px-4 py-12">
+    <div class="text-center">
+      <h1 class="serif text-4xl md:text-5xl font-black mb-4">Our Book Collection</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Discover amazing stories from talented authors. Filter by genre, search by title, or explore our featured collections.
+      </p>
     </div>
-    <nav>
-        <a href="index.html">HOME</a>
-        <a href="books.html">BOOKS</a>
-        <a href="create.html">CREATE NEW</a>
-        <a href="login.html">LOGIN</a>
-    </nav>
-</header>
+  </section>
 
-<h2>All Books</h2>
+  <!-- Search and Filters -->
+  <section class="max-w-7xl mx-auto px-4 py-6">
+    <div class="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
+      <!-- Search -->
+      <div class="w-full md:w-96">
+        <div class="flex items-center gap-2 rounded-xl border soft-border bg-white/70 backdrop-blur px-3 py-2">
+          <i class="fa-solid fa-magnifying-glass opacity-70"></i>
+          <input id="searchInput" class="w-full bg-transparent focus:outline-none py-2 text-gray-800" placeholder="Search books, authors..." />
+        </div>
+      </div>
 
-<div class="books-container" id="booksContainer">
-    <!-- Books will be dynamically inserted here -->
-</div>
+      <!-- Filters -->
+      <div class="flex flex-wrap gap-3 items-center">
+        <select id="genreFilter" class="px-4 py-2 rounded-full border soft-border bg-white/70 text-gray-800">
+          <option value="all">All Genres</option>
+        </select>
+        
+        <select id="sortFilter" class="px-4 py-2 rounded-full border soft-border bg-white/70 text-gray-800">
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+          <option value="title">Title A-Z</option>
+          <option value="rating">Highest Rated</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+        </select>
 
-<button id="loadMoreBtn">Load More</button>
-
-<footer>
-    <div>
-        <div class="footer-title">COMPANY</div>
-        <div>About Us</div>
-        <div>Careers</div>
-        <div>Terms</div>
-        <div>Privacy</div>
+        <button id="resetFilters" class="px-4 py-2 rounded-full border soft-border bg-white/70 text-gray-800 hover:bg-gray-100">
+          Reset Filters
+        </button>
+      </div>
     </div>
-    <div>
-        <div class="footer-title">WORK WITH US</div>
-        <div>Authors</div>
-        <div>Advertise</div>
-        <div>API</div>
-    </div>
-    <div>
-        <div class="footer-title">CONTACT</div>
-        <div>FAQ</div>
-        <div>Search Guide</div>
-    </div>
-    <div class="app-buttons">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play">
-        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store">
-    </div>
-</footer>
+  </section>
 
-<script>
-    const books = [
-        {title: "The Afternoon of Life", cover: "https://images-platform.99static.com//DVdRV5U4mxS9rlJpQyMtbl05LLY=/404x172:1456x1225/fit-in/500x500/projects-files/183/18364/1836425/e4190f79-e06d-4305-aff2-933124137728.jpg"},
-        {title: "Hidden Treasure", cover: "https://images.crowdspring.com/blog/wp-content/uploads/2018/09/27130903/rsz_hidden_treasure_smarikaahuja.png"},
-        {title: "The Winner Maker", cover: "https://images-platform.99static.com//IVer2mlwoEKEEWVWiI6sY-opXKY=/337x36:1414x1113/fit-in/500x500/projects-files/67/6798/679883/4e42040c-537b-4f99-b197-b54dcf6f520a.jpg"},
-        {title: "Make your own happiness", cover: "https://static.vecteezy.com/system/resources/thumbnails/000/217/193/small_2x/motivational-book-cover-with-hand-lettering.jpg"},
-        {title: "Still Single", cover: "https://images-platform.99static.com//tPNd5NweQgRCvWkb-y63B-YraHQ=/401x176:1458x1234/fit-in/500x500/projects-files/182/18278/1827808/85922e8c-e238-45ab-b8d8-f836c4667e4c.jpg"},
-        {title: "Insights", cover: "https://images-platform.99static.com//RybqcokWrO13wFtN4YOjghdGf0Q=/475x138:1528x1191/fit-in/590x590/projects-files/170/17034/1703459/d4cff965-f099-4c3a-9ba6-9ed0b3887df4.jpg"},
-        {title: "Simple", cover: "https://m.media-amazon.com/images/I/61sbo8zRifL._UF1000,1000_QL80_.jpg"},
-        {title: "Autumn", cover: "https://png.pngtree.com/template/20200807/ourmid/pngtree-color-matching-autumn-photography-book-cover-design-image_400413.jpg"},
-        {title: "Book Mockup", cover: "https://goodmockups.com/wp-content/uploads/2024/08/Free-Book-Title-Spine-Mockup-PSD.jpg"},
-        {title: "Intuition", cover: "https://i.pinimg.com/736x/71/be/d7/71bed7e22855c30309b47ee9a3083001.jpg"},
-        {title: "Through the Breaking", cover: "https://i.pinimg.com/originals/f5/47/20/f547208555040a3dd2a11b794551db03.jpg"},
-        {title: "The Periodic Table", cover: "https://i.pinimg.com/236x/19/43/18/194318d0916aea3bbb4d4a21323b34d2.jpg"},
-        {title: "West", cover: "https://i.pinimg.com/originals/95/33/86/9533864512b95c00ec38876297014ea9.jpg"},
-        {title: "Where He Comes There Is Light", cover: "https://cdn.novelupdates.com/images/2024/12/Where-He-Comes-There-Is-Light.jpg"},
-        {title: "Waiting For You In A City", cover: "https://cdn.novelupdates.com/images/2020/05/Waiting-for-You-in-a-City4.jpg"},
-        {title: "Displaying Beautiful Brocade", cover: "https://cdn.novelupdates.com/images/2025/02/Displaying-Beautiful-Brocade.jpg"},
-        {title: "Thousand Miles of Bright Moonlight", cover: "https://cdn.novelupdates.com/images/2021/03/Thousand-Miles-of-Bright-Moonlight.jpg"},
-        {title: "Series 2378", cover: "https://cdn.novelupdates.com/imgmid/series_2378.jpg"},
-        {title: "9787559407139", cover: "https://cdn.novelupdates.com/images/2019/11/9787559407139.jpg"},
-        {title: "Chun Tai Ji Ming", cover: "https://cdn.novelupdates.com/images/2025/03/Chun-Tai-Ji-Ming.jpg"},
-        {title: "Jun Jiuling", cover: "https://cdn.novelupdates.com/images/2017/06/Jun-Jiuling.jpg"},
-        {title: "Mystery Book", cover: "https://i.pinimg.com/736x/8e/98/24/8e9824c01f9d252372bca72fd01f959e.jpg"},
-        {title: "Goodreads Book", cover: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1513786433i/36154097._UX160_.jpg"},
-        {title: "Woman Who Walked Into The Sea", cover: "https://booksplease.org/wp-content/uploads/2020/10/woman-who-walked-into-the-sea.jpg"},
-        {title: "William Blake", cover: "https://c8.alamy.com/comp/JTG3G9/william-blake-the-book-of-thel-plate-2-title-page-JTG3G9.jpg"},
-        {title: "Pin Book 1", cover: "https://i.pinimg.com/236x/ea/90/ba/ea90bafd17d4b716b3cdf268c13d0265.jpg"},
-        {title: "Pin Book 2", cover: "https://i.pinimg.com/236x/2f/f8/70/2ff870b6d40745c1be9bd94a506905cb.jpg"},
-        {title: "Sample Book 1", cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794"},
-        {title: "Sample Book 2", cover: "https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d"}
-    ];
+  <!-- Books Grid -->
+  <section class="max-w-7xl mx-auto px-4 py-6">
+    <div class="flex justify-between items-center mb-6">
+      <div id="resultsInfo" class="text-gray-600 dark:text-gray-300">
+        Loading books...
+      </div>
+      <div class="flex gap-2">
+        <button id="gridView" class="p-2 rounded border soft-border bg-white/70 text-gray-800">
+          <i class="fa-solid fa-grid"></i>
+        </button>
+        <button id="listView" class="p-2 rounded border soft-border bg-gray-200 text-gray-800">
+          <i class="fa-solid fa-list"></i>
+        </button>
+      </div>
+    </div>
 
+    <div id="booksContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Books will be loaded here dynamically -->
+      <div class="text-center py-12">
+        <i class="fa-solid fa-spinner fa-spin text-3xl text-gray-400 mb-3"></i>
+        <p class="text-gray-500">Loading books...</p>
+      </div>
+    </div>
+
+    <!-- Load More Button -->
+    <div id="loadMoreContainer" class="mt-8 text-center hidden">
+      <button id="loadMoreBtn" class="px-6 py-3 rounded-full border soft-border lift bg-white/70 text-gray-800 hover:bg-gray-100">
+        Load More Books
+      </button>
+    </div>
+  </section>
+
+  <!-- Book Detail Modal -->
+  <div id="bookModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white dark:bg-[var(--soot-2)] rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+      <div class="p-6">
+        <button id="closeBookModal" class="float-right text-gray-500 hover:text-gray-700">
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+        
+        <div id="bookModalContent">
+          <!-- Book details will be loaded here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal (same as index.html) -->
+  <div id="loginModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="relative bg-white dark:bg-[var(--soot-2)] rounded-xl p-6 w-96 max-w-full mx-4">
+      <button id="closeModal" type="button" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+      
+      <!-- Login Form -->
+      <div id="loginForm">
+        <h2 class="serif text-2xl font-bold mb-4 text-gray-800 dark:text-white">Welcome Back</h2>
+        <form id="loginFormElement" class="flex flex-col gap-3">
+          <input type="email" id="loginEmail" placeholder="Email address" class="px-3 py-2 border border-gray-300 rounded text-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required/>
+          <input type="password" id="loginPassword" placeholder="Password" class="px-3 py-2 border border-gray-300 rounded text-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required/>
+          <button type="submit" class="px-4 py-2 rounded-full text-white font-semibold mt-2" style="background: var(--garnet)">Sign In</button>
+        </form>
+        <p class="mt-3 text-sm text-center text-gray-600 dark:text-gray-300">
+          Don't have an account? 
+          <button id="showRegister" class="text-[var(--garnet)] hover:underline font-semibold">Sign up</button>
+        </p>
+      </div>
+      
+      <!-- Register Form -->
+      <div id="registerForm" class="hidden">
+        <h2 class="serif text-2xl font-bold mb-4 text-gray-800 dark:text-white">Create Account</h2>
+        <form id="registerFormElement" class="flex flex-col gap-3">
+          <input type="text" id="registerUsername" placeholder="Username" class="px-3 py-2 border border-gray-300 rounded text-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required/>
+          <input type="email" id="registerEmail" placeholder="Email address" class="px-3 py-2 border border-gray-300 rounded text-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required/>
+          <input type="password" id="registerPassword" placeholder="Password" class="px-3 py-2 border border-gray-300 rounded text-gray-800 dark:bg-gray-700 dark:border-gray-600 dark:text-white" required/>
+          <button type="submit" class="px-4 py-2 rounded-full text-white font-semibold mt-2" style="background: var(--garnet)">Create Account</button>
+        </form>
+        <p class="mt-3 text-sm text-center text-gray-600 dark:text-gray-300">
+          Already have an account? 
+          <button id="showLogin" class="text-[var(--garnet)] hover:underline font-semibold">Sign in</button>
+        </p>
+      </div>
+      
+      <!-- Messages -->
+      <div id="authMessage" class="mt-3 p-3 rounded hidden text-sm"></div>
+    </div>
+  </div>
+
+  <script>
+    // API configuration
+    const API_BASE_URL = 'http://localhost:3001/api';
+
+    // Global variables
+    let allBooks = [];
+    let filteredBooks = [];
+    let currentPage = 1;
+    const booksPerPage = 12;
+    let currentView = 'grid';
+    let currentFilters = {
+      search: '',
+      genre: 'all',
+      sort: 'newest'
+    };
+
+    // DOM Elements
     const booksContainer = document.getElementById('booksContainer');
+    const resultsInfo = document.getElementById('resultsInfo');
+    const searchInput = document.getElementById('searchInput');
+    const genreFilter = document.getElementById('genreFilter');
+    const sortFilter = document.getElementById('sortFilter');
+    const resetFilters = document.getElementById('resetFilters');
+    const loadMoreContainer = document.getElementById('loadMoreContainer');
     const loadMoreBtn = document.getElementById('loadMoreBtn');
-    let booksPerPage = 12;
-    let currentIndex = 0;
+    const gridView = document.getElementById('gridView');
+    const listView = document.getElementById('listView');
+    const bookModal = document.getElementById('bookModal');
+    const closeBookModal = document.getElementById('closeBookModal');
+    const bookModalContent = document.getElementById('bookModalContent');
 
-    function renderBooks(bookArray) {
-        booksContainer.innerHTML = '';
-        const toShow = bookArray.slice(0, currentIndex);
-        toShow.forEach(book => {
-            const card = document.createElement('div');
-            card.className = 'book-card';
-            card.innerHTML = `
-                <img src="${book.cover}" alt="${book.title}">
-                <div class="book-title">${book.title}</div>
-            `;
-            booksContainer.appendChild(card);
-        });
-        if(currentIndex >= bookArray.length) {
-            loadMoreBtn.style.display = 'none';
-        } else {
-            loadMoreBtn.style.display = 'block';
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      loadBooks();
+      initializeFilters();
+      initializeAuth();
+      initializeViewToggle();
+    });
+
+    // Load books from API
+    async function loadBooks() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/books`);
+        if (!response.ok) throw new Error('Failed to fetch books');
+        
+        allBooks = await response.json();
+        applyFilters();
+        
+        // Load genres for filter
+        const genresResponse = await fetch(`${API_BASE_URL}/genres`);
+        if (genresResponse.ok) {
+          const genres = await genresResponse.json();
+          populateGenreFilter(genres);
         }
+      } catch (error) {
+        console.error('Error loading books:', error);
+        booksContainer.innerHTML = `
+          <div class="col-span-full text-center py-12">
+            <i class="fa-solid fa-exclamation-triangle text-3xl text-red-400 mb-3"></i>
+            <p class="text-red-500">Failed to load books. Please try again later.</p>
+          </div>
+        `;
+      }
     }
 
-    // Initial render
-    currentIndex = booksPerPage;
-    renderBooks(books);
+    // Populate genre filter
+    function populateGenreFilter(genres) {
+      genreFilter.innerHTML = '<option value="all">All Genres</option>';
+      genres.forEach(genre => {
+        genreFilter.innerHTML += `<option value="${genre.name}">${genre.name}</option>`;
+      });
+    }
 
-    loadMoreBtn.addEventListener('click', () => {
-        currentIndex += booksPerPage;
-        renderBooks(filteredBooks || books);
+    // Initialize filters
+    function initializeFilters() {
+      searchInput.addEventListener('input', (e) => {
+        currentFilters.search = e.target.value.toLowerCase();
+        currentPage = 1;
+        applyFilters();
+      });
+
+      genreFilter.addEventListener('change', (e) => {
+        currentFilters.genre = e.target.value;
+        currentPage = 1;
+        applyFilters();
+      });
+
+      sortFilter.addEventListener('change', (e) => {
+        currentFilters.sort = e.target.value;
+        applyFilters();
+      });
+
+      resetFilters.addEventListener('click', () => {
+        searchInput.value = '';
+        genreFilter.value = 'all';
+        sortFilter.value = 'newest';
+        currentFilters = { search: '', genre: 'all', sort: 'newest' };
+        currentPage = 1;
+        applyFilters();
+      });
+
+      loadMoreBtn.addEventListener('click', () => {
+        currentPage++;
+        displayBooks();
+      });
+    }
+
+    // Apply filters and sorting
+    function applyFilters() {
+      filteredBooks = allBooks.filter(book => {
+        const matchesSearch = !currentFilters.search || 
+          book.title.toLowerCase().includes(currentFilters.search) ||
+          book.author.toLowerCase().includes(currentFilters.search);
+        
+        const matchesGenre = currentFilters.genre === 'all' || 
+          book.genre === currentFilters.genre;
+        
+        return matchesSearch && matchesGenre;
+      });
+
+      // Sort books
+      switch (currentFilters.sort) {
+        case 'newest':
+          filteredBooks.sort((a, b) => new Date(b.publishedYear) - new Date(a.publishedYear));
+          break;
+        case 'oldest':
+          filteredBooks.sort((a, b) => new Date(a.publishedYear) - new Date(b.publishedYear));
+          break;
+        case 'title':
+          filteredBooks.sort((a, b) => a.title.localeCompare(b.title));
+          break;
+        case 'rating':
+          filteredBooks.sort((a, b) => b.rating - a.rating);
+          break;
+        case 'price-low':
+          filteredBooks.sort((a, b) => a.price - b.price);
+          break;
+        case 'price-high':
+          filteredBooks.sort((a, b) => b.price - a.price);
+          break;
+      }
+
+      displayBooks();
+    }
+
+    // Display books in grid/list view
+    function displayBooks() {
+      const startIndex = 0;
+      const endIndex = currentPage * booksPerPage;
+      const booksToShow = filteredBooks.slice(startIndex, endIndex);
+
+      if (booksToShow.length === 0) {
+        booksContainer.innerHTML = `
+          <div class="col-span-full text-center py-12">
+            <i class="fa-solid fa-book-open text-3xl text-gray-400 mb-3"></i>
+            <p class="text-gray-500">No books found matching your criteria.</p>
+          </div>
+        `;
+        loadMoreContainer.classList.add('hidden');
+        return;
+      }
+
+      booksContainer.innerHTML = booksToShow.map(book => 
+        currentView === 'grid' ? createBookCard(book) : createBookListItem(book)
+      ).join('');
+
+      // Update results info
+      resultsInfo.textContent = `Showing ${booksToShow.length} of ${filteredBooks.length} books`;
+
+      // Show/hide load more button
+      if (endIndex < filteredBooks.length) {
+        loadMoreContainer.classList.remove('hidden');
+      } else {
+        loadMoreContainer.classList.add('hidden');
+      }
+
+      // Add click events to book cards
+      document.querySelectorAll('.book-card').forEach(card => {
+        card.addEventListener('click', () => openBookModal(card.dataset.bookId));
+      });
+    }
+
+    // Create book card for grid view
+    function createBookCard(book) {
+      const stars = generateStarRating(book.rating);
+      
+      return `
+        <div class="book-card card lift rounded-2xl border soft-border bg-[var(--paper)] overflow-hidden cursor-pointer reveal" data-book-id="${book.id}">
+          <div class="relative">
+            <img src="${book.cover}" alt="${book.title}" class="h-48 w-full object-cover" loading="lazy"/>
+            ${book.isPremium ? `
+              <span class="absolute top-2 right-2 bg-yellow-500 text-black text-xs px-2 py-1 rounded-full">
+                <i class="fa-solid fa-crown mr-1"></i>Premium
+              </span>
+            ` : ''}
+          </div>
+          <div class="p-4">
+            <h3 class="serif font-bold text-lg leading-tight line-clamp-2 mb-2">${book.title}</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">by ${book.author}</p>
+            <div class="flex items-center justify-between mb-3">
+              <div class="star-rating text-sm">
+                ${stars}
+                <span class="text-gray-500 ml-1">${book.rating}</span>
+              </div>
+              <span class="text-sm text-gray-500">${book.genre}</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="font-semibold">₹${book.price}</span>
+              <button class="px-3 py-1 rounded-full text-white text-sm" style="background: var(--garnet)">
+                <i class="fa-solid fa-cart-shopping mr-1"></i>Buy
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Create book list item for list view
+    function createBookListItem(book) {
+      const stars = generateStarRating(book.rating);
+      
+      return `
+        <div class="book-card col-span-full card lift rounded-2xl border soft-border bg-[var(--paper)] overflow-hidden cursor-pointer" data-book-id="${book.id}">
+          <div class="flex">
+            <div class="w-32 flex-shrink-0">
+              <img src="${book.cover}" alt="${book.title}" class="h-full w-full object-cover" loading="lazy"/>
+            </div>
+            <div class="p-4 flex-1">
+              <div class="flex justify-between items-start mb-2">
+                <div>
+                  <h3 class="serif font-bold text-lg">${book.title}</h3>
+                  <p class="text-sm text-gray-600 dark:text-gray-300">by ${book.author}</p>
+                </div>
+                ${book.isPremium ? `
+                  <span class="bg-yellow-500 text-black text-xs px-2 py-1 rounded-full">
+                    <i class="fa-solid fa-crown mr-1"></i>Premium
+                  </span>
+                ` : ''}
+              </div>
+              <p class="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-2">${book.description}</p>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="star-rating text-sm">
+                    ${stars}
+                    <span class="text-gray-500 ml-1">${book.rating}</span>
+                  </div>
+                  <span class="text-sm text-gray-500">${book.genre}</span>
+                  <span class="text-sm text-gray-500">${book.pages} pages</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="font-semibold text-lg">₹${book.price}</span>
+                  <button class="px-4 py-2 rounded-full text-white" style="background: var(--garnet)">
+                    <i class="fa-solid fa-cart-shopping mr-2"></i>Buy Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Generate star rating HTML
+    function generateStarRating(rating) {
+      const fullStars = Math.floor(rating);
+      const hasHalfStar = rating % 1 >= 0.5;
+      const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+      
+      let stars = '';
+      
+      // Full stars
+      for (let i = 0; i < fullStars; i++) {
+        stars += '<i class="fa-solid fa-star"></i>';
+      }
+      
+      // Half star
+      if (hasHalfStar) {
+        stars += '<i class="fa-solid fa-star-half-alt"></i>';
+      }
+      
+      // Empty stars
+      for (let i = 0; i < emptyStars; i++) {
+        stars += '<i class="fa-regular fa-star"></i>';
+      }
+      
+      return stars;
+    }
+
+    // Initialize view toggle
+    function initializeViewToggle() {
+      gridView.addEventListener('click', () => {
+        currentView = 'grid';
+        gridView.classList.add('bg-gray-200');
+        listView.classList.remove('bg-gray-200');
+        currentPage = 1;
+        displayBooks();
+      });
+
+      listView.addEventListener('click', () => {
+        currentView = 'list';
+        listView.classList.add('bg-gray-200');
+        gridView.classList.remove('bg-gray-200');
+        currentPage = 1;
+        displayBooks();
+      });
+    }
+
+    // Open book detail modal
+    function openBookModal(bookId) {
+      const book = allBooks.find(b => b.id == bookId);
+      if (!book) return;
+
+      const stars = generateStarRating(book.rating);
+      
+      bookModalContent.innerHTML = `
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <img src="${book.cover}" alt="${book.title}" class="w-full rounded-lg shadow-lg" />
+          </div>
+          <div>
+            <h2 class="serif text-3xl font-bold mb-2">${book.title}</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 mb-4">by ${book.author}</p>
+            
+            <div class="flex items-center gap-4 mb-4">
+              <div class="star-rating text-lg">
+                ${stars}
+                <span class="text-gray-500 ml-2">${book.rating}/5</span>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm">${book.genre}</span>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <div class="text-center p-3 rounded-lg bg-gray-50 dark:bg-gray-800">
+                <div class="font-semibold">Pages</div>
+                <div class="text-2xl font-bold">${book.pages}</div>
+              </div>
+              <div class="text-center p-3 rounded-lg bg-gray-50 dark:bg-gray-800">
+                <div class="font-semibold">Published</div>
+                <div class="text-xl font-bold">${book.publishedYear}</div>
+              </div>
+            </div>
+            
+            <p class="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">${book.description}</p>
+            
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-3xl font-bold text-[var(--garnet)]">₹${book.price}</span>
+                ${book.isPremium ? `
+                  <span class="ml-2 bg-yellow-500 text-black text-sm px-2 py-1 rounded-full">
+                    <i class="fa-solid fa-crown mr-1"></i>Premium Book
+                  </span>
+                ` : ''}
+              </div>
+              <button class="px-6 py-3 rounded-full text-white text-lg font-semibold lift" style="background: var(--garnet)">
+                <i class="fa-solid fa-cart-shopping mr-2"></i>Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      bookModal.classList.remove('hidden');
+    }
+
+    // Close book modal
+    closeBookModal.addEventListener('click', () => {
+      bookModal.classList.add('hidden');
     });
 
-    // --- Search functionality ---
-    let filteredBooks = null;
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase();
-        filteredBooks = books.filter(book => book.title.toLowerCase().includes(query));
-        currentIndex = booksPerPage;
-        renderBooks(filteredBooks);
+    bookModal.addEventListener('click', (e) => {
+      if (e.target === bookModal) {
+        bookModal.classList.add('hidden');
+      }
     });
-</script>
 
+    // ===== AUTHENTICATION FUNCTIONS (same as index.html) =====
+    async function registerUser(userData) {
+      try {
+        const response = await fetch(`${API_BASE_URL}/auth/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(userData)
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error);
+        return data;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    }
+
+    async function loginUser(credentials) {
+      try {
+        const response = await fetch(`${API_BASE_URL}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(credentials)
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error);
+        return data;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    }
+
+    function initializeAuth() {
+      const loginModal = document.getElementById('loginModal');
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const showRegisterBtn = document.getElementById('showRegister');
+      const showLoginBtn = document.getElementById('showLogin');
+      const authMessage = document.getElementById('authMessage');
+      const closeModal = document.getElementById('closeModal');
+      const loginBtn = document.getElementById('loginBtn');
+
+      function showMessage(message, type = 'error') {
+        authMessage.textContent = message;
+        authMessage.className = `mt-3 p-3 rounded text-sm ${type === 'error' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`;
+        authMessage.classList.remove('hidden');
+        setTimeout(() => authMessage.classList.add('hidden'), 5000);
+      }
+
+      // Auth event listeners (same as before)
+      showRegisterBtn?.addEventListener('click', () => {
+        loginForm.classList.add('hidden');
+        registerForm.classList.remove('hidden');
+      });
+
+      showLoginBtn?.addEventListener('click', () => {
+        registerForm.classList.add('hidden');
+        loginForm.classList.remove('hidden');
+      });
+
+      document.getElementById('loginFormElement')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Signing in...';
+        submitBtn.disabled = true;
+        
+        try {
+          const result = await loginUser({ email, password });
+          localStorage.setItem('token', result.token);
+          localStorage.setItem('user', JSON.stringify(result.user));
+          showMessage('Login successful!', 'success');
+          setTimeout(() => {
+            loginModal.classList.add('hidden');
+            updateAuthUI();
+            e.target.reset();
+          }, 1500);
+        } catch (error) {
+          showMessage(error.message);
+        } finally {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        }
+      });
+
+      document.getElementById('registerFormElement')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('registerUsername').value;
+        const email = document.getElementById('registerEmail').value;
+        const password = document.getElementById('registerPassword').value;
+        
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Creating account...';
+        submitBtn.disabled = true;
+        
+        try {
+          const result = await registerUser({ username, email, password });
+          localStorage.setItem('token', result.token);
+          localStorage.setItem('user', JSON.stringify(result.user));
+          showMessage('Account created!', 'success');
+          setTimeout(() => {
+            loginModal.classList.add('hidden');
+            updateAuthUI();
+            registerForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+            e.target.reset();
+          }, 1500);
+        } catch (error) {
+          showMessage(error.message);
+        } finally {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        }
+      });
+
+      closeModal?.addEventListener('click', () => loginModal.classList.add('hidden'));
+      loginModal?.addEventListener('click', (e) => {
+        if (e.target === loginModal) loginModal.classList.add('hidden');
+      });
+
+      loginBtn?.addEventListener('click', () => loginModal.classList.remove('hidden'));
+    }
+
+    function updateAuthUI() {
+      const user = JSON.parse(localStorage.getItem('user') || 'null');
+      const loginBtn = document.getElementById('loginBtn');
+      
+      if (user && loginBtn) {
+        loginBtn.innerHTML = `<i class="fa-solid fa-user mr-2"></i>${user.username}`;
+        loginBtn.onclick = () => {
+          if (confirm('Logout?')) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            updateAuthUI();
+          }
+        };
+      } else if (loginBtn) {
+        loginBtn.innerHTML = 'Login';
+        loginBtn.onclick = () => {
+          document.getElementById('loginModal')?.classList.remove('hidden');
+        };
+      }
+    }
+
+    // Dark mode toggle
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle?.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      const icon = themeToggle.querySelector('i');
+      if (document.body.classList.contains('dark')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    });
+  </script>
 </body>
 </html>
